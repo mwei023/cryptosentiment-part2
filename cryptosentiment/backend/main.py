@@ -1,35 +1,34 @@
-from fastapi import FastAPI
-from fastapi import Depends
-from models.prediction import Prediction
-from database import SessionLocal, Base
-from fastapi.concurrency import run_in_threadpool
-from sqlalchemy.orm import Session
-from fastapi import APIRouter
-from fastapi.middleware.cors import CORSMiddleware
-from prophet import Prophet
-from database import engine
-from database import get_db
-from models.crypto import Base
+import asyncio
+import logging
 from concurrent.futures import ThreadPoolExecutor
+
+from fastapi import FastAPI, Depends, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+
+from database import engine, get_db, init_db
+from models.base import Base
+# FIX: was `from models.crypto import Base` — Base isn't defined in
+# crypto.py, it's imported *into* crypto.py from models.base and just
+# happened to be accessible via that indirection. Import it from its
+# actual source instead.
+from models.prediction import Prediction
 from utils.news_fetcher import fetch_news
 from utils.sentiment_analyzer import analyze_sentiment
 from utils.market_data import get_crypto_list, get_historical_prices
 from utils.confidence_calculator import calculate_confidence, calculate_volatility
+# FIX: was `from models.prediction import prepare_data, train_prophet_model,
+# make_prediction` — that duplicate implementation has been removed from
+# models/prediction.py. The canonical pipeline now lives in
+# utils/prediction_utils.py.
+from utils.prediction_utils import prepare_data, train_prophet_model, make_prediction
 
-from utils.confidence_calculator import calculate_confidence
-from models.prediction import prepare_data, train_prophet_model, make_prediction
-import logging
-import httpx
-import asyncio
-
-# Initialize FastAPI app
 app = FastAPI()
 router = APIRouter()
 
-# Add CORS middleware
 origins = [
     "http://localhost",
-    "http://localhost:3000",  # Allow React dev server
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
@@ -40,22 +39,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create tables
-Base.metadata.create_all(bind=engine)
+# FIX: use init_db() from database.py instead of calling
+# Base.metadata.create_all(bind=engine) directly here — same effect,
+# but keeps table-creation logic in one place.
+init_db()
 
 
-# 🔹 Root Endpoint
 @app.get("/")
 def read_root():
     return {
         "message": "Welcome to CryptoSentiment AI API",
-        "available_routes": ["/", "/cryptos", "/analyze-news", "/predict/{coin_id}", "/confidence/{coin_id}"]
+        "available_routes": ["/", "/cryptos", "/analyze-news", "/predict/{coin_id}", "/confidence/{coin_id}", "/history/{coin_id}"]
     }
+
 
 @app.get("/trigger-daily-predictions")
 def trigger_predictions():
@@ -63,34 +62,28 @@ def trigger_predictions():
     task = run_daily_predictions.delay()
     return {"message": "Daily predictions triggered!", "task_id": task.id}
 
-# 🔹 Analyze Sentiment from News
+
 @app.get("/analyze-news")
 async def analyze():
     logger.info("🔍 Fetching news for analysis")
     try:
-        # Fetch news articles
         titles = await fetch_news("Bitcoin")
         if not titles:
             return {"error": "No news articles found for analysis"}
 
-        # Extract titles
-        
-
-        # Analyze sentiment
-        lop = asyncio.get_event_loop()
         with ThreadPoolExecutor() as pool:
             sentiments = analyze_sentiment(titles)
-        
+
         return {"results": sentiments}
     except Exception as e:
         logger.error(f"❌ Error analyzing news: {str(e)}")
         return {"error": str(e)}
 
 
-# 🔹 Get List of Supported Cryptocurrencies
 @app.get("/cryptos")
 def list_cryptos():
     return get_crypto_list()
+
 
 @app.get("/news/{coin_id}")
 async def get_news(coin_id: str):
@@ -99,20 +92,17 @@ async def get_news(coin_id: str):
         titles = await fetch_news(coin_id)
         if not titles:
             return {"error": "No news found for this coin"}
-            
-            
-        sentiments = analyze_sentiment(titles) 
+
+        sentiments = analyze_sentiment(titles)
         return {"news": sentiments}
     except Exception as e:
         logger.error(f"❌ Error fetching news: {str(e)}")
         return {"error": "Failed to fetch news"}
-        
 
-# 🔹 Async Price Prediction with Thread Offloading
+
 @app.get("/predict/{coin_id}")
 def predict(coin_id: str, days: int = 7):
     logger.info(f"📈 Running prediction for {coin_id} over {days} days")
-
     try:
         historical_prices = get_historical_prices(coin_id, days=30)
 
@@ -121,17 +111,12 @@ def predict(coin_id: str, days: int = 7):
             return {"error": "Not enough data to make predictions"}
 
         df = prepare_data(historical_prices["prices"])
-
         if len(df) < 2:
             logger.warning("⚠️ DataFrame still has less than 2 rows after preparation")
             return {"error": "Data too sparse for training"}
 
         model = train_prophet_model(df)
-        future = model.make_future_dataframe(periods=days)
-        forecast = model.predict(future)
-
-        # Format output
-        result = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(days).to_dict(orient="records")
+        result = make_prediction(model, periods=days)
         logger.info(f"✅ Prediction result: {result}")
 
         return {"prediction": result}
@@ -140,28 +125,15 @@ def predict(coin_id: str, days: int = 7):
         return {"error": str(e)}
 
 
-
-# 🔹 Calculate Confidence Score
 @app.get("/confidence/{coin_id}")
 async def get_confidence(coin_id: str):
     logger.info(f"🔍 Calculating confidence for {coin_id}")
     try:
-        # Fetch news → Returns list of strings
         raw_news = await fetch_news(coin_id)
+        titles = raw_news
 
-        # Wrap them in dictionaries so we can extract `.get("title")`
-        articles = [{'title': title} for title in raw_news]
-
-        # Extract titles
-        titles = [a['title'] for a in articles]
-
-        # Analyze sentiment
         sentiments = analyze_sentiment(titles)
-
-        # Simulated volatility for now
         volatility_score = calculate_volatility([s['score'] for s in sentiments])
-
-        # Calculate final confidence
         confidence = calculate_confidence(sentiments, volatility_score)
 
         return {
@@ -169,19 +141,22 @@ async def get_confidence(coin_id: str):
             "sentiments_analyzed": len(sentiments),
             "volatility_score": volatility_score
         }
-
     except Exception as e:
         logger.error(f"❌ Error calculating confidence: {str(e)}")
         return {"error": "Failed to calculate confidence"}
 
 
 @app.get("/history/{coin_id}")
-def get_history(coin_id: str):
+def get_history(coin_id: str, db: Session = Depends(get_db)):
+    # FIX: `db` was never injected before — this route referenced a
+    # `db` variable that didn't exist anywhere in scope, so this endpoint
+    # crashed with NameError on every single call. Now uses FastAPI's
+    # dependency injection via Depends(get_db), same pattern as the rest
+    # of the app should use.
     logger.info(f"📜 Fetching prediction history for {coin_id}")
-    
-    # Replace this with DB query later
-    historical_predictions = Prediction.query.filter_by(crypto_id=coin_id).all()
-    
+
+    historical_predictions = db.query(Prediction).filter(Prediction.crypto_id == coin_id).all()
+
     return {
         "predictions": [
             {

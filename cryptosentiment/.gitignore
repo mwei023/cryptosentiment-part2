@@ -63,5 +63,15 @@ frontend/node_modules/
 dist/
 build/
 
+# Paper-trade journal (runtime forward-test data, not source)
+paper_journal.csv
+backend/paper_journal.csv
+
+# HuggingFace model weight caches — large binaries, never commit.
+# NOTE: models/ is ALSO the Python ORM package (base.py etc.), so ignore
+# only the weight dirs explicitly; add any new model dir here too.
+backend/models/finbert-prosus/
+backend/models/distilbert-base-uncased-finetuned-sst-2-english/
+
 # Logs
 *.log

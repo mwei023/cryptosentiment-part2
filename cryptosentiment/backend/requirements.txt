@@ -1,20 +1,31 @@
-anyio==4.5.2
-certifi==2025.4.26
-exceptiongroup==1.3.0
-git-filter-repo==2.47.0
-h11==0.16.0
-httpcore==1.0.9
-httpx==0.28.1
-idna==3.10
-sniffio==1.3.1
-typing_extensions==4.13.2
+# Backend dependencies for CryptoSentiment.
+# Install from the backend/ directory:  pip install -r requirements.txt
+#
+# NOTE: versions are intentionally unpinned — there is no lockfile yet.
+# A fresh install resolves current compatible releases. Introduce a lockfile
+# (pip-tools / uv) before any production deployment.
+
+# --- API layer ---
 fastapi
 uvicorn
-prophet
-pandas
+gunicorn
+
+# --- Database ---
 sqlalchemy
 psycopg2-binary
-requests
+
+# --- Background jobs (Celery + Redis broker) ---
+celery
+redis
+
+# --- Data / ML ---
+pandas
+numpy
+prophet
 transformers
 torch
-gunicorn
+
+# --- HTTP clients & config ---
+requests
+httpx
+python-dotenv

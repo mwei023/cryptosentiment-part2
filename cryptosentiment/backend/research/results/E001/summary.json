@@ -1,0 +1,571 @@
+{
+  "experiment_id": "E001",
+  "foundation_id": "F001",
+  "started": "2026-09-16T09:48:25.927505+00:00",
+  "finished": "2026-09-16T09:50:06.276355+00:00",
+  "git_commit": "6988fb5",
+  "python": "3.13.9",
+  "capital": 10000.0,
+  "coins": [
+    "bitcoin",
+    "ethereum",
+    "solana"
+  ],
+  "backward": {
+    "bitcoin": {
+      "coingecko_path": {
+        "buy_hold": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "win_rate": 0.0,
+          "avg_win_pct": 0.0,
+          "avg_loss_pct": -35.251113858820595,
+          "expectancy_pct": -35.251113858820595,
+          "profit_factor": 0.0,
+          "total_return_pct": -35.2511138588206,
+          "max_drawdown_pct": 53.049398123287084,
+          "final_equity": 6474.89
+        },
+        "sma_trend": {
+          "trades": 5,
+          "wins": 1,
+          "losses": 4,
+          "win_rate": 0.2,
+          "avg_win_pct": 16.015722971396105,
+          "avg_loss_pct": -5.479483670915257,
+          "expectancy_pct": -1.1804423424529844,
+          "profit_factor": 0.7307131443974603,
+          "total_return_pct": -7.908258316462657,
+          "max_drawdown_pct": 28.190511245606388,
+          "final_equity": 9209.17
+        },
+        "band_revert": {
+          "trades": 13,
+          "wins": 8,
+          "losses": 5,
+          "win_rate": 0.6153846153846154,
+          "avg_win_pct": 3.004620064439983,
+          "avg_loss_pct": -12.476085012174352,
+          "expectancy_pct": -2.949497272719376,
+          "profit_factor": 0.3853285785094321,
+          "total_return_pct": -36.36382522572864,
+          "max_drawdown_pct": 44.728378024884016,
+          "final_equity": 6363.62
+        }
+      },
+      "foundation_binance": {
+        "coin_id": "bitcoin",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 17,
+        "wins": 9,
+        "losses": 8,
+        "win_rate": 0.5294117647058824,
+        "expectancy_pct": -0.18837653891129338,
+        "avg_win_pct": 3.410200827376544,
+        "avg_loss_pct": -4.23677607598511,
+        "profit_factor": 0.9055177479273736,
+        "total_return_pct": -1.0631519508234821,
+        "max_drawdown_pct": 4.03206997505291,
+        "final_equity": 9893.68,
+        "gate_open_pct": 29.5,
+        "observation_pct": 0.0,
+        "flat_pct": 87.4
+      },
+      "foundation_trades": [
+        {
+          "entry_i": 224,
+          "exit_i": 227,
+          "reason": "stop",
+          "entry": 61498.33,
+          "exit": 54018.81,
+          "net_pct": -12.425270262519083
+        },
+        {
+          "entry_i": 314,
+          "exit_i": 320,
+          "reason": "target",
+          "entry": 70292.01,
+          "exit": 75571.99,
+          "net_pct": 7.189442433938216
+        },
+        {
+          "entry_i": 339,
+          "exit_i": 341,
+          "reason": "target",
+          "entry": 93010.01,
+          "exit": 95863.11,
+          "net_pct": 2.7587798430385693
+        },
+        {
+          "entry_i": 353,
+          "exit_i": 355,
+          "reason": "target",
+          "entry": 97276.47,
+          "exit": 101125.0,
+          "net_pct": 3.644878747068648
+        },
+        {
+          "entry_i": 362,
+          "exit_i": 368,
+          "reason": "target",
+          "entry": 100204.01,
+          "exit": 98663.58,
+          "net_pct": -1.8322394671347875
+        },
+        {
+          "entry_i": 382,
+          "exit_i": 390,
+          "reason": "target",
+          "entry": 96954.61,
+          "exit": 100497.35,
+          "net_pct": 3.3435228203526326
+        },
+        {
+          "entry_i": 394,
+          "exit_i": 396,
+          "reason": "target",
+          "entry": 101331.57,
+          "exit": 106143.82,
+          "net_pct": 4.435237184021055
+        },
+        {
+          "entry_i": 518,
+          "exit_i": 531,
+          "reason": "trail",
+          "entry": 107318.3,
+          "exit": 101508.68,
+          "net_pct": -5.696782314942907
+        },
+        {
+          "entry_i": 531,
+          "exit_i": 532,
+          "reason": "target",
+          "entry": 101508.68,
+          "exit": 104288.44,
+          "net_pct": 2.4306919123442268
+        },
+        {
+          "entry_i": 538,
+          "exit_i": 549,
+          "reason": "target",
+          "entry": 105671.73,
+          "exit": 105333.93,
+          "net_pct": -0.6182623273548359
+        },
+        {
+          "entry_i": 587,
+          "exit_i": 594,
+          "reason": "target",
+          "entry": 115764.08,
+          "exit": 117472.01,
+          "net_pct": 1.1713839062138758
+        },
+        {
+          "entry_i": 601,
+          "exit_i": 608,
+          "reason": "stop",
+          "entry": 118295.09,
+          "exit": 112500.0,
+          "net_pct": -5.183718536616902
+        },
+        {
+          "entry_i": 640,
+          "exit_i": 646,
+          "reason": "target",
+          "entry": 112650.99,
+          "exit": 112163.95,
+          "net_pct": -0.7305997649889405
+        },
+        {
+          "entry_i": 655,
+          "exit_i": 658,
+          "reason": "stop",
+          "entry": 121332.95,
+          "exit": 112774.5,
+          "net_pct": -7.332111165876822
+        },
+        {
+          "entry_i": 658,
+          "exit_i": 660,
+          "reason": "target",
+          "entry": 112774.5,
+          "exit": 114958.8,
+          "net_pct": 1.6315214341808864
+        },
+        {
+          "entry_i": 980,
+          "exit_i": 986,
+          "reason": "target",
+          "entry": 77845.87,
+          "exit": 81270.37,
+          "net_pct": 4.086349165230783
+        },
+        {
+          "entry_i": 998,
+          "exit_i": 999,
+          "reason": "expired",
+          "entry": 75644.48,
+          "exit": 75814.68,
+          "net_pct": -0.07522476844660236
+        }
+      ]
+    },
+    "ethereum": {
+      "coingecko_path": {
+        "buy_hold": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "win_rate": 0.0,
+          "avg_win_pct": 0.0,
+          "avg_loss_pct": -46.845865938059546,
+          "expectancy_pct": -46.845865938059546,
+          "profit_factor": 0.0,
+          "total_return_pct": -46.845865938059546,
+          "max_drawdown_pct": 66.61559879625926,
+          "final_equity": 5315.41
+        },
+        "sma_trend": {
+          "trades": 3,
+          "wins": 1,
+          "losses": 2,
+          "win_rate": 0.3333333333333333,
+          "avg_win_pct": 30.040423394620948,
+          "avg_loss_pct": -14.84766048298325,
+          "expectancy_pct": 0.1150341428848169,
+          "profit_factor": 1.011621441271841,
+          "total_return_pct": -8.213167480404115,
+          "max_drawdown_pct": 37.81867629845163,
+          "final_equity": 9178.68
+        },
+        "band_revert": {
+          "trades": 13,
+          "wins": 5,
+          "losses": 8,
+          "win_rate": 0.38461538461538464,
+          "avg_win_pct": 7.9490631967653265,
+          "avg_loss_pct": -9.77722342471409,
+          "expectancy_pct": -2.959420877991237,
+          "profit_factor": 0.508136541650485,
+          "total_return_pct": -38.21936450910458,
+          "max_drawdown_pct": 52.27856955373925,
+          "final_equity": 6178.06
+        }
+      },
+      "foundation_binance": {
+        "coin_id": "ethereum",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 8,
+        "wins": 6,
+        "losses": 2,
+        "win_rate": 0.75,
+        "expectancy_pct": 2.203743245218748,
+        "avg_win_pct": 5.428474118219882,
+        "avg_loss_pct": -7.470449373784653,
+        "profit_factor": 2.1799789463547605,
+        "total_return_pct": 1.2765742045635964,
+        "max_drawdown_pct": 2.2433351733969285,
+        "final_equity": 10127.66,
+        "gate_open_pct": 18.8,
+        "observation_pct": 0.0,
+        "flat_pct": 92.5
+      },
+      "foundation_trades": [
+        {
+          "entry_i": 353,
+          "exit_i": 355,
+          "reason": "target",
+          "entry": 3712.0,
+          "exit": 3831.81,
+          "net_pct": 2.9184209945857074
+        },
+        {
+          "entry_i": 362,
+          "exit_i": 378,
+          "reason": "target",
+          "entry": 3626.8,
+          "exit": 3609.01,
+          "net_pct": -0.7885963874305435
+        },
+        {
+          "entry_i": 382,
+          "exit_i": 390,
+          "reason": "target",
+          "entry": 3381.31,
+          "exit": 3451.52,
+          "net_pct": 1.7706435842065456
+        },
+        {
+          "entry_i": 588,
+          "exit_i": 591,
+          "reason": "target",
+          "entry": 3488.2,
+          "exit": 3720.99,
+          "net_pct": 6.354100951090441
+        },
+        {
+          "entry_i": 606,
+          "exit_i": 607,
+          "reason": "target",
+          "entry": 4075.59,
+          "exit": 4336.16,
+          "net_pct": 6.074727916565637
+        },
+        {
+          "entry_i": 612,
+          "exit_i": 630,
+          "reason": "target",
+          "entry": 4376.18,
+          "exit": 4712.16,
+          "net_pct": 7.354923539720937
+        },
+        {
+          "entry_i": 655,
+          "exit_i": 658,
+          "reason": "stop",
+          "entry": 4447.7,
+          "exit": 3829.72,
+          "net_pct": -14.152302360138764
+        },
+        {
+          "entry_i": 658,
+          "exit_i": 660,
+          "reason": "target",
+          "entry": 3829.72,
+          "exit": 4152.29,
+          "net_pct": 8.098027723150025
+        }
+      ]
+    },
+    "solana": {
+      "coingecko_path": {
+        "buy_hold": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "win_rate": 0.0,
+          "avg_win_pct": 0.0,
+          "avg_loss_pct": -59.109729847909,
+          "expectancy_pct": -59.109729847909,
+          "profit_factor": 0.0,
+          "total_return_pct": -59.109729847909,
+          "max_drawdown_pct": 74.88718771469888,
+          "final_equity": 4089.03
+        },
+        "sma_trend": {
+          "trades": 5,
+          "wins": 1,
+          "losses": 4,
+          "win_rate": 0.2,
+          "avg_win_pct": 3.397031992223176,
+          "avg_loss_pct": -13.2757568901093,
+          "expectancy_pct": -9.941199113642805,
+          "profit_factor": 0.06397058978147664,
+          "total_return_pct": -43.44167738804744,
+          "max_drawdown_pct": 46.489472885623606,
+          "final_equity": 5655.83
+        },
+        "band_revert": {
+          "trades": 13,
+          "wins": 6,
+          "losses": 7,
+          "win_rate": 0.46153846153846156,
+          "avg_win_pct": 4.752092810949199,
+          "avg_loss_pct": -14.184469403226757,
+          "expectancy_pct": -5.444517612068623,
+          "profit_factor": 0.28716071737293397,
+          "total_return_pct": -56.92474311575821,
+          "max_drawdown_pct": 59.06378302748184,
+          "final_equity": 4307.53
+        }
+      },
+      "foundation_binance": {
+        "coin_id": "solana",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 10,
+        "wins": 4,
+        "losses": 6,
+        "win_rate": 0.4,
+        "expectancy_pct": -5.278357171636797,
+        "avg_win_pct": 4.452315449760807,
+        "avg_loss_pct": -11.765472252568534,
+        "profit_factor": 0.252281441502915,
+        "total_return_pct": -4.695660690917213,
+        "max_drawdown_pct": 5.568298309442408,
+        "final_equity": 9530.43,
+        "gate_open_pct": 25.0,
+        "observation_pct": 0.0,
+        "flat_pct": 87.6
+      },
+      "foundation_trades": [
+        {
+          "entry_i": 308,
+          "exit_i": 319,
+          "reason": "target",
+          "entry": 164.9,
+          "exit": 166.62,
+          "net_pct": 0.740381241358097
+        },
+        {
+          "entry_i": 339,
+          "exit_i": 355,
+          "reason": "target",
+          "entry": 234.18,
+          "exit": 227.29,
+          "net_pct": -3.232918578405355
+        },
+        {
+          "entry_i": 382,
+          "exit_i": 390,
+          "reason": "target",
+          "entry": 202.17,
+          "exit": 205.86,
+          "net_pct": 1.520178553952737
+        },
+        {
+          "entry_i": 401,
+          "exit_i": 411,
+          "reason": "stop",
+          "entry": 240.5,
+          "exit": 196.12,
+          "net_pct": -18.69749637498014
+        },
+        {
+          "entry_i": 579,
+          "exit_i": 588,
+          "reason": "stop",
+          "entry": 189.4,
+          "exit": 162.71,
+          "net_pct": -14.349207445431642
+        },
+        {
+          "entry_i": 588,
+          "exit_i": 591,
+          "reason": "target",
+          "entry": 162.71,
+          "exit": 169.55,
+          "net_pct": 3.891654988784723
+        },
+        {
+          "entry_i": 612,
+          "exit_i": 620,
+          "reason": "target",
+          "entry": 187.2,
+          "exit": 209.65,
+          "net_pct": 11.65704701494767
+        },
+        {
+          "entry_i": 640,
+          "exit_i": 643,
+          "reason": "stop",
+          "entry": 220.38,
+          "exit": 192.74,
+          "net_pct": -12.803954065272006
+        },
+        {
+          "entry_i": 655,
+          "exit_i": 658,
+          "reason": "stop",
+          "entry": 219.97,
+          "exit": 188.43,
+          "net_pct": -14.594919004863169
+        },
+        {
+          "entry_i": 980,
+          "exit_i": 999,
+          "reason": "expired",
+          "entry": 104.15,
+          "exit": 97.24,
+          "net_pct": -6.914338046458892
+        }
+      ]
+    }
+  },
+  "walkforward": {
+    "prophet": {
+      "n": 12,
+      "mae": 5536.314993821953,
+      "rmse": 6516.643140173654,
+      "mape": 7.959982616456678,
+      "directional_acc": 0.5,
+      "coverage": 0.6666666666666666,
+      "mae_vs_naive": 0.18767369666262437
+    },
+    "naive": {
+      "n": 12,
+      "mae": 1039.0207007792803,
+      "rmse": 1329.7929916987414,
+      "mape": 1.5279152321386995
+    },
+    "sma7": {
+      "n": 12,
+      "mae": 1595.020211924737,
+      "rmse": 1854.1895097233141,
+      "mape": 2.3134336400167466,
+      "directional_acc": 0.5
+    },
+    "skill": {
+      "beats_naive_mae": false,
+      "beats_sma7_mae": false,
+      "directional_acc": 0.5,
+      "coverage_80_nominal": 0.6666666666666666
+    },
+    "n_folds": 12
+  },
+  "forward_papertrade": {
+    "entries": {
+      "bitcoin": {
+        "date": "2026-09-16",
+        "coin_id": "bitcoin",
+        "signal": "HOLD",
+        "price": 75841,
+        "band_lower": 73397.62,
+        "band_upper": 78388.4,
+        "band_position": "inside",
+        "n_news": 100,
+        "n_pos": 19,
+        "n_neg": 11,
+        "n_neu": 70,
+        "confidence": 65.76,
+        "settle_price": "",
+        "net_pct": "",
+        "win": "",
+        "settled": 0
+      },
+      "ethereum": {
+        "date": "2026-09-16",
+        "coin_id": "ethereum",
+        "signal": "HOLD",
+        "price": 2400.84,
+        "band_lower": 2284.88,
+        "band_upper": 2522.68,
+        "band_position": "inside",
+        "n_news": 100,
+        "n_pos": 21,
+        "n_neg": 19,
+        "n_neu": 60,
+        "confidence": 57.99,
+        "settle_price": "",
+        "net_pct": "",
+        "win": "",
+        "settled": 0
+      },
+      "solana": {
+        "coin_id": "solana",
+        "error": "insufficient history",
+        "settled": 0
+      }
+    },
+    "journal_summary": {
+      "settled": 0,
+      "note": "no settled signals yet \u2014 journal just started"
+    }
+  }
+}

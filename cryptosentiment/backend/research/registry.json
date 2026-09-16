@@ -1,0 +1,107 @@
+{
+  "project": "CryptoSentiment",
+  "updated": "2026-09-16",
+  "hypotheses": {
+    "H001": {
+      "title": "Lower-band reversal confirmation (Band Reclaim)",
+      "description": "Lower band touched -> close back inside band -> previous candle high broken -> candidate, then foundation gates.",
+      "status": "REJECTED AS COMPOSED (D004): trigger and F001 gate structurally incompatible; 0 trades in ~2400 bars/coin",
+      "tested_in": ["E002"]
+    },
+    "H002": {
+      "title": "Trend pullback continuation",
+      "description": "Bullish regime -> trend established -> pullback -> exhaustion -> trend resumes -> LONG, under foundation gates.",
+      "status": "REJECTED (D005): pooled exp -0.01%, PF 0.995 over 13 trades; BTC/ETH positive, SOL negative",
+      "tested_in": ["E003"]
+    },
+    "H003": {
+      "title": "Regime attribution of existing ledgers (analysis, not an entry hypothesis)",
+      "description": "Slice E001-E003 trades and rejections by regime (bull/range/bear/high-vol) to locate where edge lives or dies.",
+      "status": "COMPLETED (E004): suspicion refuted - killer cell is BULL_TREND, not chop; positive cells are family-specific",
+      "tested_in": ["E004"]
+    },
+    "H004": {
+      "title": "Regime-conditional book (V1 in BULL_RANGE, S003 in BULL_TREND, flat otherwise)",
+      "description": "Composition of already-tested cells; in-sample discovery then untouched out-of-sample test. D-level composition, not a new entry family.",
+      "status": "INCONCLUSIVE (D007): dev PF 1.80 exp +1.41% n=20; OOS 2 trades, 0 BULL_RANGE candidates in 8 months — cells ceased to exist",
+      "tested_in": ["E005"]
+    },
+    "H005": {
+      "title": "Information-enhanced veto (FinBERT majority gate on price signals)",
+      "description": "Same bands/price/headlines both arms; info arm vetoes BUY when neg>pos and SELL when pos>neg, never invents trades. Forward-only dual-arm test.",
+      "status": "AUTHORIZED (D008); RUNNING — needs 30+ settled signals per arm",
+      "tested_in": ["E006"]
+    }
+  },
+  "strategies": {
+    "S001": {
+      "name": "Band mean-reversion (V1 control)",
+      "file": "backend/utils/papertrade.py:band_revert",
+      "status": "REJECTED as live strategy (D001); preserved as control"
+    }
+  },
+  "foundations": {
+    "F001": {
+      "name": "Risk-first foundation (SMA200, ADX/DI, 1% risk, ATR stops, kill switch)",
+      "file": "backend/utils/foundation.py",
+      "status": "FROZEN (D002)"
+    }
+  },
+  "experiments": {
+    "E001": {
+      "title": "Foundation Validation",
+      "date": "2026-09-16",
+      "git_commit": "6988fb5",
+      "runner": "backend/research/e001_foundation_validation.py",
+      "results": "backend/research/results/E001/summary.json",
+      "report": "backend/research/results/E001/REPORT.md",
+      "status": "COMPLETED"
+    },
+    "E002": {
+      "title": "Band Reclaim Entry (H001)",
+      "date": "2026-09-16",
+      "git_commit": "6988fb5",
+      "runner": "backend/research/e002_band_reclaim.py",
+      "results": "backend/research/results/E002/summary.json",
+      "report": "backend/research/results/E002/REPORT.md",
+      "status": "COMPLETED — REJECTED (D004)"
+    },
+    "E003": {
+      "title": "Trend Pullback Entry (H002)",
+      "date": "2026-09-16",
+      "git_commit": "6988fb5",
+      "runner": "backend/research/e003_trend_pullback.py",
+      "results": "backend/research/results/E003/summary.json",
+      "report": "backend/research/results/E003/REPORT.md",
+      "status": "COMPLETED — REJECTED (D005)"
+    },
+    "E004": {
+      "title": "Regime Attribution of E001-E003 Ledgers",
+      "date": "2026-09-16",
+      "git_commit": "6988fb5",
+      "runner": "backend/research/e004_regime_attribution.py",
+      "results": "backend/research/results/E004/summary.json",
+      "report": "backend/research/results/E004/REPORT.md",
+      "status": "COMPLETED — ATTRIBUTION (D006)"
+    },
+    "E005": {
+      "title": "Regime-Conditional Book (H004): DEV vs OOS",
+      "date": "2026-09-16",
+      "git_commit": "6988fb5",
+      "runner": "backend/research/e005_regime_book.py",
+      "results": "backend/research/results/E005/summary.json",
+      "report": "backend/research/results/E005/REPORT.md",
+      "status": "COMPLETED — INCONCLUSIVE (D007); campaign concluded"
+    },
+    "E006": {
+      "title": "Price-only vs information-enhanced (H005), forward-only",
+      "date": "2026-09-16",
+      "git_commit": "unknown",
+      "runner": "backend/research/e006_price_vs_info.py",
+      "results": "backend/research/results/E006/summary.json",
+      "report": "backend/research/results/E006/REPORT.md",
+      "status": "RUNNING — collecting forward journal data (30/arm required)"
+    }
+  },
+  "decisions": ["D001", "D002", "D003", "D004", "D005", "D006", "D007", "D008"]
+}

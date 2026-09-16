@@ -1,0 +1,838 @@
+{
+  "experiment_id": "E002",
+  "hypothesis_id": "H001",
+  "foundation_id": "F001",
+  "control": "S001 band_revert (foundation.run)",
+  "treatment": "S002 band_reclaim (research.strategies.run)",
+  "started": "2026-09-16T10:04:32.107643+00:00",
+  "finished": "2026-09-16T10:04:36.231176+00:00",
+  "git_commit": "6988fb5",
+  "python": "3.13.9",
+  "capital": 10000.0,
+  "costs": "0.1% fee + 0.05% slippage per side",
+  "data": "Binance daily OHLC, 1000 bars/coin",
+  "results": {
+    "bitcoin": {
+      "coin_id": "bitcoin",
+      "v1": {
+        "coin_id": "bitcoin",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "trades": [
+          {
+            "entry_i": 224,
+            "exit_i": 227,
+            "reason": "stop",
+            "entry": 61498.33,
+            "exit": 54018.81,
+            "net_pct": -12.425270262519083
+          },
+          {
+            "entry_i": 314,
+            "exit_i": 320,
+            "reason": "target",
+            "entry": 70292.01,
+            "exit": 75571.99,
+            "net_pct": 7.189442433938216
+          },
+          {
+            "entry_i": 339,
+            "exit_i": 341,
+            "reason": "target",
+            "entry": 93010.01,
+            "exit": 95863.11,
+            "net_pct": 2.7587798430385693
+          },
+          {
+            "entry_i": 353,
+            "exit_i": 355,
+            "reason": "target",
+            "entry": 97276.47,
+            "exit": 101125.0,
+            "net_pct": 3.644878747068648
+          },
+          {
+            "entry_i": 362,
+            "exit_i": 368,
+            "reason": "target",
+            "entry": 100204.01,
+            "exit": 98663.58,
+            "net_pct": -1.8322394671347875
+          },
+          {
+            "entry_i": 382,
+            "exit_i": 390,
+            "reason": "target",
+            "entry": 96954.61,
+            "exit": 100497.35,
+            "net_pct": 3.3435228203526326
+          },
+          {
+            "entry_i": 394,
+            "exit_i": 396,
+            "reason": "target",
+            "entry": 101331.57,
+            "exit": 106143.82,
+            "net_pct": 4.435237184021055
+          },
+          {
+            "entry_i": 518,
+            "exit_i": 531,
+            "reason": "trail",
+            "entry": 107318.3,
+            "exit": 101508.68,
+            "net_pct": -5.696782314942907
+          },
+          {
+            "entry_i": 531,
+            "exit_i": 532,
+            "reason": "target",
+            "entry": 101508.68,
+            "exit": 104288.44,
+            "net_pct": 2.4306919123442268
+          },
+          {
+            "entry_i": 538,
+            "exit_i": 549,
+            "reason": "target",
+            "entry": 105671.73,
+            "exit": 105333.93,
+            "net_pct": -0.6182623273548359
+          },
+          {
+            "entry_i": 587,
+            "exit_i": 594,
+            "reason": "target",
+            "entry": 115764.08,
+            "exit": 117472.01,
+            "net_pct": 1.1713839062138758
+          },
+          {
+            "entry_i": 601,
+            "exit_i": 608,
+            "reason": "stop",
+            "entry": 118295.09,
+            "exit": 112500.0,
+            "net_pct": -5.183718536616902
+          },
+          {
+            "entry_i": 640,
+            "exit_i": 646,
+            "reason": "target",
+            "entry": 112650.99,
+            "exit": 112163.95,
+            "net_pct": -0.7305997649889405
+          },
+          {
+            "entry_i": 655,
+            "exit_i": 658,
+            "reason": "stop",
+            "entry": 121332.95,
+            "exit": 112774.5,
+            "net_pct": -7.332111165876822
+          },
+          {
+            "entry_i": 658,
+            "exit_i": 660,
+            "reason": "target",
+            "entry": 112774.5,
+            "exit": 114958.8,
+            "net_pct": 1.6315214341808864
+          },
+          {
+            "entry_i": 980,
+            "exit_i": 986,
+            "reason": "target",
+            "entry": 77845.87,
+            "exit": 81270.37,
+            "net_pct": 4.086349165230783
+          },
+          {
+            "entry_i": 998,
+            "exit_i": 999,
+            "reason": "expired",
+            "entry": 75644.48,
+            "exit": 75814.68,
+            "net_pct": -0.07522476844660236
+          }
+        ],
+        "n_trades": 17,
+        "wins": 9,
+        "losses": 8,
+        "win_rate": 0.5294117647058824,
+        "expectancy_pct": -0.18837653891129338,
+        "avg_win_pct": 3.410200827376544,
+        "avg_loss_pct": -4.23677607598511,
+        "profit_factor": 0.9055177479273736,
+        "total_return_pct": -1.0631519508234821,
+        "max_drawdown_pct": 4.03206997505291,
+        "final_equity": 9893.68,
+        "gate_open_pct": 29.5,
+        "observation_pct": 0.0,
+        "flat_pct": 87.4
+      },
+      "s002": {
+        "coin_id": "bitcoin",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "trades": [],
+        "n_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate": 0.0,
+        "expectancy_pct": 0.0,
+        "avg_win_pct": 0.0,
+        "avg_loss_pct": 0.0,
+        "profit_factor": 0.0,
+        "total_return_pct": 0.0,
+        "max_drawdown_pct": 0.0,
+        "final_equity": 10000.0,
+        "gate_open_pct": 29.5,
+        "observation_pct": 0.0,
+        "n_candidates_fired": 5,
+        "n_rejected_after_trigger": 5,
+        "rejections": [
+          {
+            "i": 474,
+            "ts": 1744156800000,
+            "close": 82615.22,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": false,
+                "strong_downtrend": false,
+                "adx": 18.1
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": 2.39,
+            "fwd10": 2.98
+          },
+          {
+            "i": 476,
+            "ts": 1744329600000,
+            "close": 83423.84,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": false,
+                "strong_downtrend": false,
+                "adx": 14.3
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": 0.73,
+            "fwd10": 4.91
+          },
+          {
+            "i": 711,
+            "ts": 1764633600000,
+            "close": 91277.88,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": true,
+                "strong_downtrend": true,
+                "adx": 56.3
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": -0.97,
+            "fwd10": -1.11
+          },
+          {
+            "i": 843,
+            "ts": 1776038400000,
+            "close": 74417.99,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": false,
+                "strong_downtrend": false,
+                "adx": 17.4
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": 1.71,
+            "fwd10": 5.16
+          },
+          {
+            "i": 935,
+            "ts": 1783987200000,
+            "close": 65043.98,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": false,
+                "strong_downtrend": false,
+                "adx": 29.1
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": -0.49,
+            "fwd10": -1.39
+          }
+        ]
+      },
+      "buy_hold_pct": 30.6,
+      "v1_skipped_by_s002": [
+        {
+          "i": 224,
+          "v1_net_pct": -12.425270262519083,
+          "fwd10_pct": -3.5
+        },
+        {
+          "i": 314,
+          "v1_net_pct": 7.189442433938216,
+          "fwd10_pct": 14.34
+        },
+        {
+          "i": 339,
+          "v1_net_pct": 2.7587798430385693,
+          "fwd10_pct": 4.23
+        },
+        {
+          "i": 353,
+          "v1_net_pct": 3.644878747068648,
+          "fwd10_pct": 0.19
+        },
+        {
+          "i": 362,
+          "v1_net_pct": -1.8322394671347875,
+          "fwd10_pct": -4.89
+        },
+        {
+          "i": 382,
+          "v1_net_pct": 3.3435228203526326,
+          "fwd10_pct": 7.35
+        },
+        {
+          "i": 394,
+          "v1_net_pct": 4.435237184021055,
+          "fwd10_pct": 2.37
+        },
+        {
+          "i": 518,
+          "v1_net_pct": -5.696782314942907,
+          "fwd10_pct": -1.36
+        },
+        {
+          "i": 531,
+          "v1_net_pct": 2.4306919123442268,
+          "fwd10_pct": 4.02
+        },
+        {
+          "i": 538,
+          "v1_net_pct": -0.6182623273548359,
+          "fwd10_pct": -4.46
+        },
+        {
+          "i": 587,
+          "v1_net_pct": 1.1713839062138758,
+          "fwd10_pct": 3.05
+        },
+        {
+          "i": 601,
+          "v1_net_pct": -5.183718536616902,
+          "fwd10_pct": -4.06
+        },
+        {
+          "i": 640,
+          "v1_net_pct": -0.7305997649889405,
+          "fwd10_pct": 6.99
+        },
+        {
+          "i": 655,
+          "v1_net_pct": -7.332111165876822,
+          "fwd10_pct": -12.28
+        },
+        {
+          "i": 658,
+          "v1_net_pct": 1.6315214341808864,
+          "fwd10_pct": -1.99
+        },
+        {
+          "i": 980,
+          "v1_net_pct": 4.086349165230783,
+          "fwd10_pct": 1.63
+        },
+        {
+          "i": 998,
+          "v1_net_pct": -0.07522476844660236,
+          "fwd10_pct": 0.22
+        }
+      ]
+    },
+    "ethereum": {
+      "coin_id": "ethereum",
+      "v1": {
+        "coin_id": "ethereum",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "trades": [
+          {
+            "entry_i": 353,
+            "exit_i": 355,
+            "reason": "target",
+            "entry": 3712.0,
+            "exit": 3831.81,
+            "net_pct": 2.9184209945857074
+          },
+          {
+            "entry_i": 362,
+            "exit_i": 378,
+            "reason": "target",
+            "entry": 3626.8,
+            "exit": 3609.01,
+            "net_pct": -0.7885963874305435
+          },
+          {
+            "entry_i": 382,
+            "exit_i": 390,
+            "reason": "target",
+            "entry": 3381.31,
+            "exit": 3451.52,
+            "net_pct": 1.7706435842065456
+          },
+          {
+            "entry_i": 588,
+            "exit_i": 591,
+            "reason": "target",
+            "entry": 3488.2,
+            "exit": 3720.99,
+            "net_pct": 6.354100951090441
+          },
+          {
+            "entry_i": 606,
+            "exit_i": 607,
+            "reason": "target",
+            "entry": 4075.59,
+            "exit": 4336.16,
+            "net_pct": 6.074727916565637
+          },
+          {
+            "entry_i": 612,
+            "exit_i": 630,
+            "reason": "target",
+            "entry": 4376.18,
+            "exit": 4712.16,
+            "net_pct": 7.354923539720937
+          },
+          {
+            "entry_i": 655,
+            "exit_i": 658,
+            "reason": "stop",
+            "entry": 4447.7,
+            "exit": 3829.72,
+            "net_pct": -14.152302360138764
+          },
+          {
+            "entry_i": 658,
+            "exit_i": 660,
+            "reason": "target",
+            "entry": 3829.72,
+            "exit": 4152.29,
+            "net_pct": 8.098027723150025
+          }
+        ],
+        "n_trades": 8,
+        "wins": 6,
+        "losses": 2,
+        "win_rate": 0.75,
+        "expectancy_pct": 2.203743245218748,
+        "avg_win_pct": 5.428474118219882,
+        "avg_loss_pct": -7.470449373784653,
+        "profit_factor": 2.1799789463547605,
+        "total_return_pct": 1.2765742045635964,
+        "max_drawdown_pct": 2.2433351733969285,
+        "final_equity": 10127.66,
+        "gate_open_pct": 18.8,
+        "observation_pct": 0.0,
+        "flat_pct": 92.5
+      },
+      "s002": {
+        "coin_id": "ethereum",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "trades": [],
+        "n_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate": 0.0,
+        "expectancy_pct": 0.0,
+        "avg_win_pct": 0.0,
+        "avg_loss_pct": 0.0,
+        "profit_factor": 0.0,
+        "total_return_pct": 0.0,
+        "max_drawdown_pct": 0.0,
+        "final_equity": 10000.0,
+        "gate_open_pct": 18.8,
+        "observation_pct": 0.0,
+        "n_candidates_fired": 3,
+        "n_rejected_after_trigger": 3,
+        "rejections": [
+          {
+            "i": 230,
+            "ts": 1723075200000,
+            "close": 2682.5,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": true,
+                "strong_downtrend": true,
+                "adx": 26.2
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": 0.74,
+            "fwd10": -2.62
+          },
+          {
+            "i": 474,
+            "ts": 1744156800000,
+            "close": 1669.51,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": true,
+                "strong_downtrend": false,
+                "adx": 23.2
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": -2.74,
+            "fwd10": -3.37
+          },
+          {
+            "i": 843,
+            "ts": 1776038400000,
+            "close": 2369.46,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": true,
+                "structure_down": false,
+                "strong_downtrend": false,
+                "adx": 12.5
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": -0.81,
+            "fwd10": -1.65
+          }
+        ]
+      },
+      "buy_hold_pct": -21.64,
+      "v1_skipped_by_s002": [
+        {
+          "i": 353,
+          "v1_net_pct": 2.9184209945857074,
+          "fwd10_pct": -7.95
+        },
+        {
+          "i": 362,
+          "v1_net_pct": -0.7885963874305435,
+          "fwd10_pct": -6.14
+        },
+        {
+          "i": 382,
+          "v1_net_pct": 1.7706435842065456,
+          "fwd10_pct": 2.73
+        },
+        {
+          "i": 588,
+          "v1_net_pct": 6.354100951090441,
+          "fwd10_pct": 21.07
+        },
+        {
+          "i": 606,
+          "v1_net_pct": 6.074727916565637,
+          "fwd10_pct": 6.98
+        },
+        {
+          "i": 612,
+          "v1_net_pct": 7.354923539720937,
+          "fwd10_pct": -1.8
+        },
+        {
+          "i": 655,
+          "v1_net_pct": -14.152302360138764,
+          "fwd10_pct": -13.85
+        },
+        {
+          "i": 658,
+          "v1_net_pct": 8.098027723150025,
+          "fwd10_pct": 3.9
+        }
+      ]
+    },
+    "solana": {
+      "coin_id": "solana",
+      "v1": {
+        "coin_id": "solana",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "trades": [
+          {
+            "entry_i": 308,
+            "exit_i": 319,
+            "reason": "target",
+            "entry": 164.9,
+            "exit": 166.62,
+            "net_pct": 0.740381241358097
+          },
+          {
+            "entry_i": 339,
+            "exit_i": 355,
+            "reason": "target",
+            "entry": 234.18,
+            "exit": 227.29,
+            "net_pct": -3.232918578405355
+          },
+          {
+            "entry_i": 382,
+            "exit_i": 390,
+            "reason": "target",
+            "entry": 202.17,
+            "exit": 205.86,
+            "net_pct": 1.520178553952737
+          },
+          {
+            "entry_i": 401,
+            "exit_i": 411,
+            "reason": "stop",
+            "entry": 240.5,
+            "exit": 196.12,
+            "net_pct": -18.69749637498014
+          },
+          {
+            "entry_i": 579,
+            "exit_i": 588,
+            "reason": "stop",
+            "entry": 189.4,
+            "exit": 162.71,
+            "net_pct": -14.349207445431642
+          },
+          {
+            "entry_i": 588,
+            "exit_i": 591,
+            "reason": "target",
+            "entry": 162.71,
+            "exit": 169.55,
+            "net_pct": 3.891654988784723
+          },
+          {
+            "entry_i": 612,
+            "exit_i": 620,
+            "reason": "target",
+            "entry": 187.2,
+            "exit": 209.65,
+            "net_pct": 11.65704701494767
+          },
+          {
+            "entry_i": 640,
+            "exit_i": 643,
+            "reason": "stop",
+            "entry": 220.38,
+            "exit": 192.74,
+            "net_pct": -12.803954065272006
+          },
+          {
+            "entry_i": 655,
+            "exit_i": 658,
+            "reason": "stop",
+            "entry": 219.97,
+            "exit": 188.43,
+            "net_pct": -14.594919004863169
+          },
+          {
+            "entry_i": 980,
+            "exit_i": 999,
+            "reason": "expired",
+            "entry": 104.15,
+            "exit": 97.24,
+            "net_pct": -6.914338046458892
+          }
+        ],
+        "n_trades": 10,
+        "wins": 4,
+        "losses": 6,
+        "win_rate": 0.4,
+        "expectancy_pct": -5.278357171636797,
+        "avg_win_pct": 4.452315449760807,
+        "avg_loss_pct": -11.765472252568534,
+        "profit_factor": 0.252281441502915,
+        "total_return_pct": -4.695660690917213,
+        "max_drawdown_pct": 5.568298309442408,
+        "final_equity": 9530.43,
+        "gate_open_pct": 25.0,
+        "observation_pct": 0.0,
+        "flat_pct": 87.6
+      },
+      "s002": {
+        "coin_id": "solana",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "trades": [],
+        "n_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate": 0.0,
+        "expectancy_pct": 0.0,
+        "avg_win_pct": 0.0,
+        "avg_loss_pct": 0.0,
+        "profit_factor": 0.0,
+        "total_return_pct": 0.0,
+        "max_drawdown_pct": 0.0,
+        "final_equity": 10000.0,
+        "gate_open_pct": 25.0,
+        "observation_pct": 0.0,
+        "n_candidates_fired": 2,
+        "n_rejected_after_trigger": 2,
+        "rejections": [
+          {
+            "i": 228,
+            "ts": 1722902400000,
+            "close": 144.4,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": false,
+                "strong_downtrend": false,
+                "adx": 40.7
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": -1.96,
+            "fwd10": -3.71
+          },
+          {
+            "i": 843,
+            "ts": 1776038400000,
+            "close": 86.51,
+            "trigger": true,
+            "trigger_reason": "",
+            "veto": {
+              "gate": {
+                "above_sma200": false,
+                "plus_gt_minus": false,
+                "structure_down": true,
+                "strong_downtrend": false,
+                "adx": 24.3
+              }
+            },
+            "v1_would_enter": false,
+            "fwd5": -0.4,
+            "fwd10": -0.45
+          }
+        ]
+      },
+      "buy_hold_pct": -31.24,
+      "v1_skipped_by_s002": [
+        {
+          "i": 308,
+          "v1_net_pct": 0.740381241358097,
+          "fwd10_pct": -4.21
+        },
+        {
+          "i": 339,
+          "v1_net_pct": -3.232918578405355,
+          "fwd10_pct": 0.71
+        },
+        {
+          "i": 382,
+          "v1_net_pct": 1.520178553952737,
+          "fwd10_pct": 8.58
+        },
+        {
+          "i": 401,
+          "v1_net_pct": -18.69749637498014,
+          "fwd10_pct": -18.45
+        },
+        {
+          "i": 579,
+          "v1_net_pct": -14.349207445431642,
+          "fwd10_pct": -16.33
+        },
+        {
+          "i": 588,
+          "v1_net_pct": 3.891654988784723,
+          "fwd10_pct": 7.45
+        },
+        {
+          "i": 612,
+          "v1_net_pct": 11.65704701494767,
+          "fwd10_pct": 8.08
+        },
+        {
+          "i": 640,
+          "v1_net_pct": -12.803954065272006,
+          "fwd10_pct": 6.52
+        },
+        {
+          "i": 655,
+          "v1_net_pct": -14.594919004863169,
+          "fwd10_pct": -17.28
+        },
+        {
+          "i": 980,
+          "v1_net_pct": -6.914338046458892,
+          "fwd10_pct": -0.34
+        }
+      ]
+    }
+  },
+  "pooled_v1": {
+    "trades": 35,
+    "wins": 19,
+    "win_rate": 0.543,
+    "expectancy_pct": -1.096,
+    "profit_factor": 0.679,
+    "total_net_pct": -38.36
+  },
+  "pooled_s002": {
+    "trades": 0,
+    "wins": 0,
+    "win_rate": 0.0,
+    "expectancy_pct": 0.0,
+    "profit_factor": 0.0,
+    "total_net_pct": 0
+  },
+  "verdict": {
+    "s002_beats_control": false,
+    "pooled_s002_expectancy_positive": false,
+    "status": "REJECTED"
+  }
+}

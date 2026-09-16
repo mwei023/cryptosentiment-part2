@@ -1,0 +1,898 @@
+{
+  "experiment_id": "E004",
+  "type": "analysis_of_existing_ledgers",
+  "started": "2026-09-16T10:32:21.698988+00:00",
+  "finished": "2026-09-16T10:32:34.376506+00:00",
+  "git_commit": "6988fb5",
+  "python": "3.13.9",
+  "regime_definitions": {
+    "bull_bear": "close vs SMA200 (F001 rule)",
+    "trend_range": "ADX(14) >= 25 (F001 threshold)",
+    "high_vol": "trailing 30d sigma > 1.5x trailing 252d median",
+    "assignment": "trades by entry-bar regime; candidates by bar, judged fwd10"
+  },
+  "ledgers": {
+    "trades": [
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 224,
+        "net_pct": -12.425270262519083,
+        "reason": "stop",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 314,
+        "net_pct": 7.189442433938216,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 339,
+        "net_pct": 2.7587798430385693,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 353,
+        "net_pct": 3.644878747068648,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 362,
+        "net_pct": -1.8322394671347875,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 382,
+        "net_pct": 3.3435228203526326,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 394,
+        "net_pct": 4.435237184021055,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 518,
+        "net_pct": -5.696782314942907,
+        "reason": "trail",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 531,
+        "net_pct": 2.4306919123442268,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 538,
+        "net_pct": -0.6182623273548359,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 587,
+        "net_pct": 1.1713839062138758,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 601,
+        "net_pct": -5.183718536616902,
+        "reason": "stop",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 640,
+        "net_pct": -0.7305997649889405,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 655,
+        "net_pct": -7.332111165876822,
+        "reason": "stop",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 658,
+        "net_pct": 1.6315214341808864,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 980,
+        "net_pct": 4.086349165230783,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "bitcoin",
+        "entry_i": 998,
+        "net_pct": -0.07522476844660236,
+        "reason": "expired",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "entry_i": 355,
+        "net_pct": 2.992402881462725,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "entry_i": 597,
+        "net_pct": 3.053845501432303,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "entry_i": 647,
+        "net_pct": 3.436016588411049,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "entry_i": 649,
+        "net_pct": -5.192720851730538,
+        "reason": "stop",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 353,
+        "net_pct": 2.9184209945857074,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 362,
+        "net_pct": -0.7885963874305435,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 382,
+        "net_pct": 1.7706435842065456,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 588,
+        "net_pct": 6.354100951090441,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 606,
+        "net_pct": 6.074727916565637,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 612,
+        "net_pct": 7.354923539720937,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 655,
+        "net_pct": -14.152302360138764,
+        "reason": "stop",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "ethereum",
+        "entry_i": 658,
+        "net_pct": 8.098027723150025,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "entry_i": 591,
+        "net_pct": 4.773101783125993,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "entry_i": 621,
+        "net_pct": 5.56312590070598,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "entry_i": 994,
+        "net_pct": -4.792435814274891,
+        "reason": "expired",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 308,
+        "net_pct": 0.740381241358097,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 339,
+        "net_pct": -3.232918578405355,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 382,
+        "net_pct": 1.520178553952737,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 401,
+        "net_pct": -18.69749637498014,
+        "reason": "stop",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 579,
+        "net_pct": -14.349207445431642,
+        "reason": "stop",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 588,
+        "net_pct": 3.891654988784723,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 612,
+        "net_pct": 11.65704701494767,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 640,
+        "net_pct": -12.803954065272006,
+        "reason": "stop",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 655,
+        "net_pct": -14.594919004863169,
+        "reason": "stop",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S001_V1_band_revert",
+        "coin": "solana",
+        "entry_i": 980,
+        "net_pct": -6.914338046458892,
+        "reason": "expired",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "entry_i": 320,
+        "net_pct": 4.915500429617109,
+        "reason": "target",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "entry_i": 596,
+        "net_pct": 6.254805066642902,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "entry_i": 599,
+        "net_pct": -2.295847083478439,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "entry_i": 607,
+        "net_pct": 6.464207594110601,
+        "reason": "target",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "entry_i": 650,
+        "net_pct": -19.968664622560077,
+        "reason": "stop",
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "entry_i": 994,
+        "net_pct": -5.378960643555451,
+        "reason": "expired",
+        "regime": "BULL_TREND",
+        "high_vol": false
+      }
+    ],
+    "candidates": [
+      {
+        "system": "S002_band_reclaim",
+        "coin": "bitcoin",
+        "i": 474,
+        "fwd10": 2.98,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "bitcoin",
+        "i": 476,
+        "fwd10": 4.91,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "bitcoin",
+        "i": 711,
+        "fwd10": -1.11,
+        "regime": "BEAR_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "bitcoin",
+        "i": 843,
+        "fwd10": 5.16,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "bitcoin",
+        "i": 935,
+        "fwd10": -1.39,
+        "regime": "BEAR_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 378,
+        "fwd10": -3.71,
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 535,
+        "fwd10": -5.08,
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 542,
+        "fwd10": 0.14,
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 549,
+        "fwd10": 4.04,
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 594,
+        "fwd10": -0.06,
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 609,
+        "fwd10": -6.58,
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 822,
+        "fwd10": -5.65,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 835,
+        "fwd10": 8.37,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 951,
+        "fwd10": 0.19,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 957,
+        "fwd10": -2.44,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "bitcoin",
+        "i": 969,
+        "fwd10": 24.36,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "ethereum",
+        "i": 230,
+        "fwd10": -2.62,
+        "regime": "BEAR_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "ethereum",
+        "i": 474,
+        "fwd10": -3.37,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "ethereum",
+        "i": 843,
+        "fwd10": -1.65,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 297,
+        "fwd10": -3.57,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 311,
+        "fwd10": 12.77,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 320,
+        "fwd10": 15.1,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 355,
+        "fwd10": -12.86,
+        "regime": "BULL_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 528,
+        "fwd10": 1.35,
+        "regime": "BEAR_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 535,
+        "fwd10": -5.93,
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 629,
+        "fwd10": -0.31,
+        "regime": "BULL_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 822,
+        "fwd10": -4.41,
+        "regime": "BEAR_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 831,
+        "fwd10": 6.76,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 835,
+        "fwd10": 11.84,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 869,
+        "fwd10": -9.22,
+        "regime": "BEAR_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 957,
+        "fwd10": -1.38,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "ethereum",
+        "i": 969,
+        "fwd10": 31.22,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "solana",
+        "i": 228,
+        "fwd10": -3.71,
+        "regime": "BEAR_TREND",
+        "high_vol": false
+      },
+      {
+        "system": "S002_band_reclaim",
+        "coin": "solana",
+        "i": 843,
+        "fwd10": -0.45,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "i": 296,
+        "fwd10": 15.64,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "i": 536,
+        "fwd10": -15.15,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      },
+      {
+        "system": "S003_trend_pullback",
+        "coin": "solana",
+        "i": 822,
+        "fwd10": -13.66,
+        "regime": "BEAR_RANGE",
+        "high_vol": false
+      }
+    ]
+  },
+  "tables": {
+    "trades_by_system": {
+      "S001_V1_band_revert": {
+        "BULL_TREND": {
+          "n": 23,
+          "mean_pct": -1.84,
+          "median_pct": -0.08,
+          "win_rate": 0.48,
+          "sum_pct": -42.26
+        },
+        "BULL_RANGE": {
+          "n": 12,
+          "mean_pct": 0.32,
+          "median_pct": 1.77,
+          "win_rate": 0.67,
+          "sum_pct": 3.9
+        },
+        "BEAR_TREND": {
+          "n": 0
+        },
+        "BEAR_RANGE": {
+          "n": 0
+        }
+      },
+      "S002_band_reclaim": {
+        "BULL_TREND": {
+          "n": 0
+        },
+        "BULL_RANGE": {
+          "n": 0
+        },
+        "BEAR_TREND": {
+          "n": 0
+        },
+        "BEAR_RANGE": {
+          "n": 0
+        }
+      },
+      "S003_trend_pullback": {
+        "BULL_TREND": {
+          "n": 8,
+          "mean_pct": 0.79,
+          "median_pct": 3.44,
+          "win_rate": 0.62,
+          "sum_pct": 6.32
+        },
+        "BULL_RANGE": {
+          "n": 5,
+          "mean_pct": -1.3,
+          "median_pct": 3.05,
+          "win_rate": 0.6,
+          "sum_pct": -6.49
+        },
+        "BEAR_TREND": {
+          "n": 0
+        },
+        "BEAR_RANGE": {
+          "n": 0
+        }
+      }
+    },
+    "trades_pooled": {
+      "BULL_TREND": {
+        "n": 31,
+        "mean_pct": -1.16,
+        "median_pct": 1.17,
+        "win_rate": 0.52,
+        "sum_pct": -35.94
+      },
+      "BULL_RANGE": {
+        "n": 17,
+        "mean_pct": -0.15,
+        "median_pct": 1.77,
+        "win_rate": 0.65,
+        "sum_pct": -2.59
+      },
+      "BEAR_TREND": {
+        "n": 0
+      },
+      "BEAR_RANGE": {
+        "n": 0
+      }
+    },
+    "trades_vol": {
+      "HIGH_VOL": {
+        "n": 0,
+        "mean_pct": null,
+        "median_pct": null,
+        "win_rate": null,
+        "sum_pct": null
+      },
+      "NORMAL_VOL": {
+        "n": 48,
+        "mean_pct": -0.8,
+        "median_pct": 1.63,
+        "win_rate": 0.56,
+        "sum_pct": -38.53
+      }
+    },
+    "candidates_pooled_fwd10": {
+      "BULL_TREND": {
+        "n": 2,
+        "mean_pct": -4.41,
+        "median_pct": 4.04,
+        "win_rate": 0.5,
+        "sum_pct": -8.82
+      },
+      "BULL_RANGE": {
+        "n": 7,
+        "mean_pct": -3.08,
+        "median_pct": -3.71,
+        "win_rate": 0.14,
+        "sum_pct": -21.53
+      },
+      "BEAR_TREND": {
+        "n": 7,
+        "mean_pct": -3.02,
+        "median_pct": -2.62,
+        "win_rate": 0.14,
+        "sum_pct": -21.11
+      },
+      "BEAR_RANGE": {
+        "n": 21,
+        "mean_pct": 4.38,
+        "median_pct": 2.98,
+        "win_rate": 0.57,
+        "sum_pct": 91.98
+      }
+    },
+    "candidates_vol": {
+      "HIGH_VOL": {
+        "n": 0,
+        "mean_pct": null,
+        "median_pct": null,
+        "win_rate": null,
+        "sum_pct": null
+      },
+      "NORMAL_VOL": {
+        "n": 37,
+        "mean_pct": 1.1,
+        "median_pct": -1.11,
+        "win_rate": 0.41,
+        "sum_pct": 40.52
+      }
+    }
+  },
+  "verdict": {
+    "status": "PATTERN_NOT_CONFIRMED",
+    "d006": "NONE"
+  }
+}

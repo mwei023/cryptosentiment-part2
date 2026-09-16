@@ -1,3 +1,19 @@
+"""Prophet forecasting pipeline — crypto-realistic configuration.
+
+Brutal-truth notes (why this looks the way it does):
+- Crypto trades 24/7/365. There are no weekends, no market holidays, no
+  "US holiday" effects. The old code called
+  ``model.add_country_holidays(country_name='US')`` — that injected
+  stock-market closures into a market that never closes. Removed.
+- ``yearly_seasonality=True`` on 30 data points is pure overfit: Prophet
+  tries to estimate an annual cycle from one month of data. Disabled.
+  With daily CoinGecko data the only defensible periodic component is
+  weekly seasonality; daily seasonality needs intraday data.
+- Minimum history is enforced (default 180 daily points). Anything less
+  and the function raises instead of returning a confident-looking
+  garbage forecast. Callers must surface that error honestly.
+"""
+
 from sqlalchemy.orm import Session
 import logging
 from prophet import Prophet
@@ -8,29 +24,59 @@ from models.prediction import Prediction
 
 logger = logging.getLogger(__name__)
 
+MIN_HISTORY_DAYS = 180
+DEFAULT_HISTORY_DAYS = 365  # fetch a year, require 180 after cleaning
+MAX_HORIZON_DAYS = 7
 
-def prepare_data(prices):
-    if not prices or len(prices) < 2:
-        raise ValueError("Not enough price data to train model")
+
+def prepare_data(prices, min_history: int = MIN_HISTORY_DAYS):
+    """Clean CoinGecko ``[[timestamp_ms, price], ...]`` into Prophet ``ds/y``.
+
+    Raises:
+        ValueError: if fewer than ``min_history`` usable rows remain.
+    """
+    if not prices or len(prices) < min_history:
+        raise ValueError(
+            f"Not enough price data: got {len(prices) if prices else 0} rows, "
+            f"need >= {min_history} daily points for a defensible fit."
+        )
 
     df = pd.DataFrame(prices, columns=["timestamp", "y"])
     df["ds"] = pd.to_datetime(df["timestamp"], unit="ms")
-    df = df[["ds", "y"]]
+    df = df[["ds", "y"]].dropna()
+    df = df[df["y"] > 0]  # reject zero/negative stub rows
+    df = df.sort_values("ds").drop_duplicates(subset="ds").reset_index(drop=True)
+
+    if len(df) < min_history:
+        raise ValueError(
+            f"Only {len(df)} usable rows after cleaning, need >= {min_history}."
+        )
     return df
 
 
 def train_prophet_model(df):
+    """Fit Prophet with crypto-honest settings. No holidays, no yearly cycle."""
+    if len(df) < MIN_HISTORY_DAYS:
+        raise ValueError(
+            f"Refusing to train on {len(df)} rows (< {MIN_HISTORY_DAYS} minimum)."
+        )
     model = Prophet(
-        yearly_seasonality=True,
-        weekly_seasonality=True,
-        daily_seasonality=True
+        yearly_seasonality=False,   # cannot estimate annual cycle; no annual cycle in crypto anyway
+        weekly_seasonality=True,    # only periodic component defensible on daily data
+        daily_seasonality=False,    # needs intraday timestamps; we have daily closes
+        changepoint_prior_scale=0.05,  # Prophet default; conservative on noisy crypto
+        interval_width=0.8,         # honest 80% intervals, not fake-narrow bands
+        mcmc_samples=0,             # MAP fit; full MCMC too slow per-request
     )
-    model.add_country_holidays(country_name='US')
+    # NOTE: deliberately NO add_country_holidays — crypto never closes.
     model.fit(df)
     return model
 
 
-def make_prediction(model, periods=7):
+def make_prediction(model, periods: int = 1):
+    """Forecast ``periods`` days ahead. Capped to ``MAX_HORIZON_DAYS``."""
+    if periods < 1 or periods > MAX_HORIZON_DAYS:
+        raise ValueError(f"periods must be 1..{MAX_HORIZON_DAYS}, got {periods}.")
     future = model.make_future_dataframe(periods=periods)
     forecast = model.predict(future)
     latest = forecast.tail(periods)
@@ -38,9 +84,9 @@ def make_prediction(model, periods=7):
     return [
         {
             "date": row["ds"].strftime("%Y-%m-%d"),
-            "predicted": row["yhat"],
-            "lower": row["yhat_lower"],
-            "upper": row["yhat_upper"]
+            "predicted": float(row["yhat"]),
+            "lower": float(row["yhat_lower"]),
+            "upper": float(row["yhat_upper"]),
         }
         for _, row in latest.iterrows()
     ]
@@ -54,10 +100,6 @@ def save_prediction(db: Session, coin_id: str, prediction_data: list, confidence
         predicted_price=latest["predicted"],
         lower_bound=latest["lower"],
         upper_bound=latest["upper"],
-        # FIX: this was hardcoded to 0.95 with a "placeholder" comment,
-        # meaning every prediction ever saved reported 95% confidence
-        # regardless of what confidence_calculator.py actually computed.
-        # Now it uses whatever confidence value the caller passes in.
         confidence_score=confidence,
         prediction_type=prediction_type,
         generated_at=datetime.utcnow()
@@ -69,73 +111,142 @@ def save_prediction(db: Session, coin_id: str, prediction_data: list, confidence
     return db_prediction
 
 
-def run_prediction_pipeline(coin_id: str, days: int, db: Session):
-    """
-    Signature is (coin_id, days, db) — callers must pass args in THIS
-    order or as keywords. tasks.py was previously calling this as
-    run_prediction_pipeline(db, coin_id, days=7), which silently
-    swapped db into coin_id and coin_id into days, then collided with
-    the days=7 keyword. Fixed on the caller side in tasks.py.
+def run_prediction_pipeline(coin_id: str, days: int = 1, db: Session = None,
+                            history_days: int = DEFAULT_HISTORY_DAYS,
+                            use_forecaster: str = "naive"):
+    """End-to-end pipeline: fetch history -> forecast -> FinBERT sentiment -> confidence -> save.
+
+    Args:
+        coin_id: CoinGecko slug, e.g. ``"bitcoin"``.
+        days: forecast horizon in days (1..7). Only 1-day is
+            walk-forward validated; larger values are experimental.
+        db: SQLAlchemy session. If None, prediction is returned but not persisted.
+        history_days: how much history to request from CoinGecko (default 365
+            so >= 180 survive cleaning even with gaps).
+        use_forecaster: ``"naive"`` (default, validated: tomorrow = today
+            plus empirical volatility bands) or ``"prophet"`` (experimental
+            research path — walk-forward shows it loses to naive 1-day).
+
+    Returns a dict with ``prediction`` / ``confidence`` / ``db_id``,
+    or ``{"error": ...}`` — never a fake-confident number.
     """
     from utils.market_data import get_historical_prices
     from utils.news_fetcher import fetch_news
     from utils.sentiment_analyzer import analyze_sentiment
-    from utils.confidence_calculator import calculate_confidence, calculate_volatility
+    from utils.confidence_calculator import calculate_confidence
+    from utils.volatility import calculate_volatility as price_volatility
 
-    logger.info(f"📈 Running prediction for {coin_id} over {days} days")
+    if days < 1 or days > MAX_HORIZON_DAYS:
+        return {"error": f"horizon must be 1..{MAX_HORIZON_DAYS} days, got {days}."}
+    if use_forecaster not in ("naive", "prophet"):
+        return {"error": f"use_forecaster must be 'naive' or 'prophet', got {use_forecaster}."}
 
-    price_data = get_historical_prices(coin_id, days=30)
+    logger.info(f"Running prediction for {coin_id} over {days} day(s) [{use_forecaster}]")
+
+    price_data = get_historical_prices(coin_id, days=history_days)
     prices = price_data.get("prices", [])
     if not prices:
         logger.error("No prices returned from CoinGecko")
         return {"error": "No prices returned from CoinGecko"}
 
-    try:
-        df = prepare_data(prices)
-        logger.info("✅ Data prepared for model")
-    except Exception as e:
-        logger.exception("❌ Error preparing data")
-        return {"error": f"prepare_data: {e}"}
+    closes = [float(p[1]) for p in prices if p[1] is not None and float(p[1]) > 0]
+    if not closes:
+        return {"error": "No usable closes returned from CoinGecko"}
+    vol = price_volatility(closes)
 
-    try:
-        model = train_prophet_model(df)
-        logger.info("✅ Model trained")
-    except Exception as e:
-        logger.exception("❌ Error training model")
-        return {"error": f"train_prophet_model: {e}"}
+    if use_forecaster == "naive":
+        from datetime import timedelta
+        from utils.forecaster import naive_forecast
+        try:
+            fc = naive_forecast(closes)
+        except Exception as e:
+            return {"error": f"naive_forecast: {e}"}
+        last_ts_ms = prices[-1][0]
+        prediction = []
+        for i in range(1, days + 1):
+            # Multi-day naive bands scale with sqrt(time) — standard
+            # random-walk diffusion; flagged experimental beyond day 1.
+            import math as _math
+            widen = _math.sqrt(i)
+            import pandas as _pd
+            day = (_pd.to_datetime(last_ts_ms, unit="ms") + timedelta(days=i)).strftime("%Y-%m-%d")
+            prediction.append({
+                "date": day,
+                "predicted": fc["predicted"],
+                "lower": fc["predicted"] * _math.exp(-1.2816 * fc["sigma"] * widen),
+                "upper": fc["predicted"] * _math.exp(1.2816 * fc["sigma"] * widen),
+            })
+        history_rows = len(closes)
+    else:  # prophet — experimental research path
+        try:
+            df = prepare_data(prices)
+            logger.info(f"Data prepared: {len(df)} rows")
+        except Exception as e:
+            logger.exception("Error preparing data")
+            return {"error": f"prepare_data: {e}"}
 
-    try:
-        prediction = make_prediction(model, periods=days)
-        logger.info(f"✅ Prediction completed with {len(prediction)} entries")
-    except Exception as e:
-        logger.exception("❌ Error making prediction")
-        return {"error": f"make_prediction: {e}"}
+        try:
+            model = train_prophet_model(df)
+            logger.info("Model trained")
+        except Exception as e:
+            logger.exception("Error training model")
+            return {"error": f"train_prophet_model: {e}"}
 
-    # FIX: this is the first real fusion point. Sentiment + volatility
-    # are now actually computed and fed into confidence_score, instead
-    # of running in a parallel, disconnected endpoint (/confidence/{coin_id})
-    # that never touched the saved Prediction row.
+        try:
+            prediction = make_prediction(model, periods=days)
+            logger.info(f"Prediction completed with {len(prediction)} entries")
+        except Exception as e:
+            logger.exception("Error making prediction")
+            return {"error": f"make_prediction: {e}"}
+        history_rows = len(df)
+
+    # Real fusion point: FinBERT sentiment on headlines + REAL price volatility.
     confidence = 0.0
+    n_news = 0
     try:
         import asyncio
-        titles = asyncio.run(fetch_news(coin_id))
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = None
+        if loop is not None:
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                titles = pool.submit(asyncio.run, fetch_news(coin_id)).result()
+        else:
+            titles = asyncio.run(fetch_news(coin_id))
         if titles:
             sentiments = analyze_sentiment(titles)
-            volatility_score = calculate_volatility([s["score"] for s in sentiments])
-            confidence = calculate_confidence(sentiments, volatility_score)
+            n_news = len(sentiments)
+            confidence = calculate_confidence(sentiments, price_volatility=vol)
         else:
-            logger.warning("⚠️ No news found — confidence defaults to 0")
+            logger.warning("No news found — confidence from price data only")
+            confidence = calculate_confidence([], price_volatility=vol)
     except Exception as e:
-        logger.warning(f"⚠️ Failed to compute confidence: {e}")
+        logger.warning(f"Failed to compute confidence: {e}")
 
-    try:
-        saved_prediction = save_prediction(db, coin_id, prediction, confidence=confidence, prediction_type="short")
-        logger.info(f"💾 Prediction saved to DB (ID: {saved_prediction.id})")
-    except Exception as e:
-        logger.warning(f"⚠️ Failed to save prediction: {e}")
+    saved_id = None
+    if db is not None:
+        try:
+            saved_prediction = save_prediction(db, coin_id, prediction, confidence=confidence, prediction_type="short")
+            saved_id = saved_prediction.id
+            logger.info(f"Prediction saved to DB (ID: {saved_id})")
+        except Exception as e:
+            logger.warning(f"Failed to save prediction: {e}")
+    else:
+        logger.info("No DB session — prediction not persisted")
 
-    return {
+    result = {
         "prediction": prediction,
         "confidence": confidence,
-        "db_id": saved_prediction.id if 'saved_prediction' in locals() else None
+        "db_id": saved_id,
+        "forecaster": use_forecaster,
+        "history_rows": history_rows,
+        "news_articles": n_news,
     }
+    if days > 1:
+        result["warning"] = (
+            f"{days}-day horizon is experimental; only the 1-day horizon "
+            "has been walk-forward validated."
+        )
+    return result

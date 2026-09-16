@@ -1,0 +1,526 @@
+{
+  "experiment_id": "E005",
+  "hypothesis_id": "H004",
+  "book": "V1 in BULL_RANGE, S003 in BULL_TREND, flat otherwise (D006)",
+  "split": {
+    "dev": [
+      200,
+      760
+    ],
+    "oos": [
+      760,
+      1000
+    ],
+    "leak_disclosure": "E004 attribution used the full window; cells NOT re-selected on dev (D006 named them)",
+    "dev_dates": {
+      "bitcoin": [
+        "2024-07-09",
+        "2026-01-19"
+      ],
+      "ethereum": [
+        "2024-07-09",
+        "2026-01-19"
+      ],
+      "solana": [
+        "2024-07-09",
+        "2026-01-19"
+      ]
+    },
+    "oos_dates": {
+      "bitcoin": [
+        "2026-01-20",
+        "2026-09-16"
+      ],
+      "ethereum": [
+        "2026-01-20",
+        "2026-09-16"
+      ],
+      "solana": [
+        "2026-01-20",
+        "2026-09-16"
+      ]
+    }
+  },
+  "pre_registered_rules": {
+    "min_oos_trades": 5,
+    "advanced": "OOS pooled expectancy > 0"
+  },
+  "started": "2026-09-16T10:46:21.958850+00:00",
+  "finished": "2026-09-16T10:46:26.817216+00:00",
+  "git_commit": "6988fb5",
+  "python": "3.13.9",
+  "capital": 10000.0,
+  "results": {
+    "dev": {
+      "bitcoin": {
+        "coin_id": "bitcoin",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 560,
+        "trades": [
+          {
+            "entry_i": 355,
+            "exit_i": 359,
+            "reason": "target",
+            "entry": 101125.0,
+            "exit": 104463.99,
+            "net_pct": 2.992402881462725,
+            "entry_regime": "BULL_TREND"
+          },
+          {
+            "entry_i": 382,
+            "exit_i": 390,
+            "reason": "target",
+            "entry": 96954.61,
+            "exit": 100497.35,
+            "net_pct": 3.3435228203526166,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 394,
+            "exit_i": 396,
+            "reason": "target",
+            "entry": 101331.57,
+            "exit": 106143.82,
+            "net_pct": 4.435237184021046,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 531,
+            "exit_i": 532,
+            "reason": "target",
+            "entry": 101508.68,
+            "exit": 104288.44,
+            "net_pct": 2.430691912344225,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 538,
+            "exit_i": 549,
+            "reason": "target",
+            "entry": 105671.73,
+            "exit": 105333.93,
+            "net_pct": -0.6182623273548312,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 606,
+            "exit_i": 609,
+            "reason": "target",
+            "entry": 112872.94,
+            "exit": 116935.99,
+            "net_pct": 3.2893335230031786,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 640,
+            "exit_i": 646,
+            "reason": "target",
+            "entry": 112650.99,
+            "exit": 112163.95,
+            "net_pct": -0.7305997649889482,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 647,
+            "exit_i": 649,
+            "reason": "target",
+            "entry": 114311.96,
+            "exit": 118594.99,
+            "net_pct": 3.4360165884110514,
+            "entry_regime": "BULL_TREND"
+          },
+          {
+            "entry_i": 649,
+            "exit_i": 658,
+            "reason": "stop",
+            "entry": 118594.99,
+            "exit": 112774.5,
+            "net_pct": -5.192720851730543,
+            "entry_regime": "BULL_TREND"
+          }
+        ],
+        "n_trades": 9,
+        "wins": 6,
+        "losses": 3,
+        "win_rate": 0.6666666666666666,
+        "expectancy_pct": 1.4872913295022798,
+        "avg_win_pct": 3.321200818265807,
+        "avg_loss_pct": -2.1805276480247744,
+        "profit_factor": 3.046235915673263,
+        "total_return_pct": 1.7858298196293365,
+        "max_drawdown_pct": 2.4906935081832415,
+        "final_equity": 10178.58,
+        "gate_open_pct": 37.1,
+        "observation_pct": 0.0,
+        "n_rejected_after_trigger": 7,
+        "trigger_diag": {
+          "cand_BULL_RANGE": 12,
+          "cand_BULL_TREND": 4,
+          "fired": 16,
+          "fired_gate_open": 9,
+          "fired_gate_closed": 7,
+          "already_in": 1,
+          "standdown": 0,
+          "no_atr": 0
+        }
+      },
+      "ethereum": {
+        "coin_id": "ethereum",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 560,
+        "trades": [
+          {
+            "entry_i": 382,
+            "exit_i": 390,
+            "reason": "target",
+            "entry": 3381.31,
+            "exit": 3451.52,
+            "net_pct": 1.7706435842065544,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 591,
+            "exit_i": 594,
+            "reason": "target",
+            "entry": 3720.99,
+            "exit": 3910.31,
+            "net_pct": 4.7731017831260125,
+            "entry_regime": "BULL_TREND"
+          },
+          {
+            "entry_i": 621,
+            "exit_i": 630,
+            "reason": "target",
+            "entry": 4450.46,
+            "exit": 4712.16,
+            "net_pct": 5.563125900705969,
+            "entry_regime": "BULL_TREND"
+          },
+          {
+            "entry_i": 655,
+            "exit_i": 658,
+            "reason": "stop",
+            "entry": 4447.7,
+            "exit": 3829.72,
+            "net_pct": -14.152302360138764,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 658,
+            "exit_i": 660,
+            "reason": "target",
+            "entry": 3829.72,
+            "exit": 4152.29,
+            "net_pct": 8.098027723150027,
+            "entry_regime": "BULL_RANGE"
+          }
+        ],
+        "n_trades": 5,
+        "wins": 4,
+        "losses": 1,
+        "win_rate": 0.8,
+        "expectancy_pct": 1.2105193262099596,
+        "avg_win_pct": 5.051224747797141,
+        "avg_loss_pct": -14.152302360138764,
+        "profit_factor": 1.4276757574158028,
+        "total_return_pct": 0.20919732230917365,
+        "max_drawdown_pct": 2.2433351733969236,
+        "final_equity": 10020.92,
+        "gate_open_pct": 21.6,
+        "observation_pct": 0.0,
+        "n_rejected_after_trigger": 5,
+        "trigger_diag": {
+          "cand_BULL_RANGE": 7,
+          "cand_BULL_TREND": 3,
+          "fired": 10,
+          "fired_gate_open": 5,
+          "fired_gate_closed": 5,
+          "already_in": 0,
+          "standdown": 0,
+          "no_atr": 0
+        }
+      },
+      "solana": {
+        "coin_id": "solana",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 560,
+        "trades": [
+          {
+            "entry_i": 308,
+            "exit_i": 319,
+            "reason": "target",
+            "entry": 164.9,
+            "exit": 166.62,
+            "net_pct": 0.740381241358097,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 320,
+            "exit_i": 321,
+            "reason": "target",
+            "entry": 186.59,
+            "exit": 196.35,
+            "net_pct": 4.915500429617097,
+            "entry_regime": "BULL_TREND"
+          },
+          {
+            "entry_i": 353,
+            "exit_i": 355,
+            "reason": "target",
+            "entry": 216.63,
+            "exit": 227.29,
+            "net_pct": 4.606541694636184,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 382,
+            "exit_i": 390,
+            "reason": "target",
+            "entry": 202.17,
+            "exit": 205.86,
+            "net_pct": 1.5201785539527328,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 612,
+            "exit_i": 620,
+            "reason": "target",
+            "entry": 187.2,
+            "exit": 209.65,
+            "net_pct": 11.657047014947675,
+            "entry_regime": "BULL_RANGE"
+          },
+          {
+            "entry_i": 655,
+            "exit_i": 658,
+            "reason": "stop",
+            "entry": 219.97,
+            "exit": 188.43,
+            "net_pct": -14.594919004863169,
+            "entry_regime": "BULL_RANGE"
+          }
+        ],
+        "n_trades": 6,
+        "wins": 5,
+        "losses": 1,
+        "win_rate": 0.8333333333333334,
+        "expectancy_pct": 1.4741216549414364,
+        "avg_win_pct": 4.687929786902357,
+        "avg_loss_pct": -14.594919004863169,
+        "profit_factor": 1.6060143209223339,
+        "total_return_pct": 0.5659511299589859,
+        "max_drawdown_pct": 1.7319221536173015,
+        "final_equity": 10056.6,
+        "gate_open_pct": 30.7,
+        "observation_pct": 0.0,
+        "n_rejected_after_trigger": 1,
+        "trigger_diag": {
+          "cand_BULL_RANGE": 6,
+          "cand_BULL_TREND": 1,
+          "fired": 7,
+          "fired_gate_open": 6,
+          "fired_gate_closed": 1,
+          "already_in": 0,
+          "standdown": 0,
+          "no_atr": 0
+        }
+      }
+    },
+    "oos": {
+      "bitcoin": {
+        "coin_id": "bitcoin",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 240,
+        "trades": [],
+        "n_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate": 0.0,
+        "expectancy_pct": 0.0,
+        "avg_win_pct": 0.0,
+        "avg_loss_pct": 0.0,
+        "profit_factor": 0.0,
+        "total_return_pct": 0.0,
+        "max_drawdown_pct": 0.0,
+        "final_equity": 10000.0,
+        "gate_open_pct": 11.7,
+        "observation_pct": 0.0,
+        "n_rejected_after_trigger": 0,
+        "trigger_diag": {
+          "cand_BULL_RANGE": 0,
+          "cand_BULL_TREND": 0,
+          "fired": 0,
+          "fired_gate_open": 0,
+          "fired_gate_closed": 0,
+          "already_in": 0,
+          "standdown": 0,
+          "no_atr": 0
+        }
+      },
+      "ethereum": {
+        "coin_id": "ethereum",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 240,
+        "trades": [
+          {
+            "entry_i": 994,
+            "exit_i": 999,
+            "reason": "expired",
+            "entry": 2516.43,
+            "exit": 2403.03,
+            "net_pct": -4.792435814274891,
+            "entry_regime": "BULL_TREND"
+          }
+        ],
+        "n_trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "win_rate": 0.0,
+        "expectancy_pct": -4.792435814274891,
+        "avg_win_pct": 0.0,
+        "avg_loss_pct": -4.792435814274891,
+        "profit_factor": 0.0,
+        "total_return_pct": -0.6790412618963848,
+        "max_drawdown_pct": 0.7175516020393428,
+        "final_equity": 9932.1,
+        "gate_open_pct": 12.1,
+        "observation_pct": 0.0,
+        "n_rejected_after_trigger": 0,
+        "trigger_diag": {
+          "cand_BULL_RANGE": 0,
+          "cand_BULL_TREND": 1,
+          "fired": 1,
+          "fired_gate_open": 1,
+          "fired_gate_closed": 0,
+          "already_in": 0,
+          "standdown": 0,
+          "no_atr": 0
+        }
+      },
+      "solana": {
+        "coin_id": "solana",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 240,
+        "trades": [
+          {
+            "entry_i": 994,
+            "exit_i": 999,
+            "reason": "expired",
+            "entry": 102.46,
+            "exit": 97.24,
+            "net_pct": -5.378960643555459,
+            "entry_regime": "BULL_TREND"
+          }
+        ],
+        "n_trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "win_rate": 0.0,
+        "expectancy_pct": -5.378960643555459,
+        "avg_win_pct": 0.0,
+        "avg_loss_pct": -5.378960643555459,
+        "profit_factor": 0.0,
+        "total_return_pct": -0.593832557441909,
+        "max_drawdown_pct": 0.6168712660052188,
+        "final_equity": 9940.62,
+        "gate_open_pct": 11.7,
+        "observation_pct": 0.0,
+        "n_rejected_after_trigger": 0,
+        "trigger_diag": {
+          "cand_BULL_RANGE": 0,
+          "cand_BULL_TREND": 1,
+          "fired": 1,
+          "fired_gate_open": 1,
+          "fired_gate_closed": 0,
+          "already_in": 0,
+          "standdown": 0,
+          "no_atr": 0
+        }
+      }
+    },
+    "baselines_oos": {
+      "bitcoin": {
+        "v1": {
+          "n_trades": 2,
+          "expectancy_pct": 2.005562198392097,
+          "profit_factor": 54.32185767553441
+        },
+        "s003": {
+          "n_trades": 0,
+          "expectancy_pct": 0.0,
+          "profit_factor": 0.0
+        }
+      },
+      "ethereum": {
+        "v1": {
+          "n_trades": 0,
+          "expectancy_pct": 0.0,
+          "profit_factor": 0.0
+        },
+        "s003": {
+          "n_trades": 1,
+          "expectancy_pct": -4.792435814274891,
+          "profit_factor": 0.0
+        }
+      },
+      "solana": {
+        "v1": {
+          "n_trades": 1,
+          "expectancy_pct": -6.914338046458883,
+          "profit_factor": 0.0
+        },
+        "s003": {
+          "n_trades": 1,
+          "expectancy_pct": -5.378960643555459,
+          "profit_factor": 0.0
+        }
+      }
+    }
+  },
+  "pooled_dev": {
+    "trades": 20,
+    "win_rate": 0.75,
+    "expectancy_pct": 1.414,
+    "profit_factor": 1.801,
+    "sum_pct": 28.28,
+    "per_cell": {
+      "BULL_RANGE(V1)": {
+        "n": 14,
+        "mean": 0.84,
+        "sum": 11.8
+      },
+      "BULL_TREND(S003)": {
+        "n": 6,
+        "mean": 2.75,
+        "sum": 16.49
+      }
+    }
+  },
+  "pooled_oos": {
+    "trades": 2,
+    "win_rate": 0.0,
+    "expectancy_pct": -5.086,
+    "profit_factor": 0.0,
+    "sum_pct": -10.17,
+    "per_cell": {
+      "BULL_RANGE(V1)": {
+        "n": 0
+      },
+      "BULL_TREND(S003)": {
+        "n": 2,
+        "mean": -5.09,
+        "sum": -10.17
+      }
+    }
+  },
+  "verdict": {
+    "status": "INCONCLUSIVE",
+    "reason": "only 2 OOS trades (< 5): the book's cells barely exist in the out-of-sample window \u2014 no verdict possible, and that absence is itself the finding"
+  }
+}

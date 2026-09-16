@@ -1,0 +1,26 @@
+{
+  "experiment_id": "E006",
+  "hypothesis_id": "H005",
+  "design": "dual-arm forward journal: identical inputs, info arm = price signal + FinBERT majority veto; HOLDs never become trades on news alone",
+  "pre_registered_rules": {
+    "min_settled_per_arm": 30,
+    "advanced": "info expectancy > price expectancy AND info PF > price PF AND vetoed-price exp <= 0"
+  },
+  "started": "2026-09-16T11:48:59.020735+00:00",
+  "finished": "2026-09-16T11:48:59.025812+00:00",
+  "git_commit": "6988fb5",
+  "python": "3.13.9",
+  "journal_rows": 5,
+  "price": {
+    "settled": 0
+  },
+  "info": {
+    "settled": 0
+  },
+  "vetoes": 0,
+  "vetoed_price_expectancy_pct": null,
+  "verdict": {
+    "status": "RUNNING",
+    "reason": "only 0 price / 0 info settled (< 30/arm): no verdict possible yet \u2014 keep logging daily"
+  }
+}

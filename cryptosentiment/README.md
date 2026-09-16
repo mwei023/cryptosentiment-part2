@@ -329,12 +329,6 @@ source cryptoenv/bin/activate
 pip install -r requirements.txt
 ```
 
-If Celery is not included in the requirements file yet:
-
-```bash
-pip install celery redis
-```
-
 ---
 
 ## 4. Configure PostgreSQL

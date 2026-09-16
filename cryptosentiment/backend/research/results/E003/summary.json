@@ -1,0 +1,772 @@
+{
+  "experiment_id": "E003",
+  "hypothesis_id": "H002",
+  "foundation_id": "F001",
+  "control": "S001 band_revert (foundation.run)",
+  "treatment": "S003 trend_pullback (research.strategies.run_pullback)",
+  "started": "2026-09-16T10:23:31.537374+00:00",
+  "finished": "2026-09-16T10:23:41.874294+00:00",
+  "git_commit": "6988fb5",
+  "python": "3.13.9",
+  "capital": 10000.0,
+  "costs": "0.1% fee + 0.05% slippage per side",
+  "data": "Binance daily OHLC, 1000 bars/coin (~2.7y)",
+  "pre_registered_rules": {
+    "min_pooled_trades_for_verdict": 10,
+    "advanced_requires": "positive pooled expectancy AND beats control"
+  },
+  "results": {
+    "bitcoin": {
+      "v1": {
+        "coin_id": "bitcoin",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 17,
+        "wins": 9,
+        "losses": 8,
+        "win_rate": 0.5294117647058824,
+        "expectancy_pct": -0.18837653891129338,
+        "avg_win_pct": 3.410200827376544,
+        "avg_loss_pct": -4.23677607598511,
+        "profit_factor": 0.9055177479273736,
+        "total_return_pct": -1.0631519508234821,
+        "max_drawdown_pct": 4.03206997505291,
+        "final_equity": 9893.68,
+        "gate_open_pct": 29.5,
+        "observation_pct": 0.0,
+        "flat_pct": 87.4
+      },
+      "s003": {
+        "coin_id": "bitcoin",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 4,
+        "wins": 3,
+        "losses": 1,
+        "win_rate": 0.75,
+        "expectancy_pct": 1.0723860298938848,
+        "avg_win_pct": 3.160754990435359,
+        "avg_loss_pct": -5.192720851730538,
+        "profit_factor": 1.8260686915504027,
+        "total_return_pct": 0.611442788615757,
+        "max_drawdown_pct": 2.490693508183231,
+        "final_equity": 10061.14,
+        "gate_open_pct": 29.5,
+        "observation_pct": 0.0,
+        "n_candidates_fired": 15,
+        "n_rejected_after_trigger": 11
+      },
+      "buy_hold_pct": 30.6,
+      "trigger_diag": {
+        "fired": 15,
+        "fired_gate_open": 4,
+        "fired_gate_closed": 11,
+        "already_in": 0,
+        "standdown": 0,
+        "no_atr": 0
+      },
+      "s003_trades": [
+        {
+          "entry_i": 355,
+          "exit_i": 359,
+          "reason": "target",
+          "entry": 101125.0,
+          "exit": 104463.99,
+          "net_pct": 2.992402881462725
+        },
+        {
+          "entry_i": 597,
+          "exit_i": 600,
+          "reason": "target",
+          "entry": 119294.01,
+          "exit": 123306.43,
+          "net_pct": 3.053845501432303
+        },
+        {
+          "entry_i": 647,
+          "exit_i": 649,
+          "reason": "target",
+          "entry": 114311.96,
+          "exit": 118594.99,
+          "net_pct": 3.436016588411049
+        },
+        {
+          "entry_i": 649,
+          "exit_i": 658,
+          "reason": "stop",
+          "entry": 118594.99,
+          "exit": 112774.5,
+          "net_pct": -5.192720851730538
+        }
+      ],
+      "s003_rejections": [
+        {
+          "i": 378,
+          "ts": 1735862400000,
+          "close": 98174.18,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 22.7
+            }
+          },
+          "fwd5": -3.17,
+          "fwd10": -3.71
+        },
+        {
+          "i": 535,
+          "ts": 1749427200000,
+          "close": 110263.02,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 18.3
+            }
+          },
+          "fwd5": -4.4,
+          "fwd10": -5.08
+        },
+        {
+          "i": 542,
+          "ts": 1750032000000,
+          "close": 106794.53,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": true,
+              "strong_downtrend": false,
+              "adx": 17.8
+            }
+          },
+          "fwd5": -4.38,
+          "fwd10": 0.14
+        },
+        {
+          "i": 549,
+          "ts": 1750636800000,
+          "close": 105333.93,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": true,
+              "strong_downtrend": true,
+              "adx": 25.1
+            }
+          },
+          "fwd5": 1.86,
+          "fwd10": 4.04
+        },
+        {
+          "i": 594,
+          "ts": 1754524800000,
+          "close": 117472.01,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 19.0
+            }
+          },
+          "fwd5": 2.27,
+          "fwd10": -0.06
+        },
+        {
+          "i": 609,
+          "ts": 1755820800000,
+          "close": 116935.99,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 14.9
+            }
+          },
+          "fwd5": -4.85,
+          "fwd10": -6.58
+        },
+        {
+          "i": 822,
+          "ts": 1774224000000,
+          "close": 70906.45,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 16.0
+            }
+          },
+          "fwd5": -6.39,
+          "fwd10": -5.65
+        },
+        {
+          "i": 835,
+          "ts": 1775347200000,
+          "close": 69034.18,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 10.6
+            }
+          },
+          "fwd5": 5.69,
+          "fwd10": 8.37
+        },
+        {
+          "i": 951,
+          "ts": 1785369600000,
+          "close": 64780.02,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 11.4
+            }
+          },
+          "fwd5": -1.04,
+          "fwd10": 0.19
+        },
+        {
+          "i": 957,
+          "ts": 1785888000000,
+          "close": 64665.23,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 25.0
+            }
+          },
+          "fwd5": -1.08,
+          "fwd10": -2.44
+        },
+        {
+          "i": 969,
+          "ts": 1786924800000,
+          "close": 64532.1,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 17.3
+            }
+          },
+          "fwd5": 19.44,
+          "fwd10": 24.36
+        }
+      ]
+    },
+    "ethereum": {
+      "v1": {
+        "coin_id": "ethereum",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 8,
+        "wins": 6,
+        "losses": 2,
+        "win_rate": 0.75,
+        "expectancy_pct": 2.203743245218748,
+        "avg_win_pct": 5.428474118219882,
+        "avg_loss_pct": -7.470449373784653,
+        "profit_factor": 2.1799789463547605,
+        "total_return_pct": 1.2765742045635964,
+        "max_drawdown_pct": 2.2433351733969285,
+        "final_equity": 10127.66,
+        "gate_open_pct": 18.8,
+        "observation_pct": 0.0,
+        "flat_pct": 92.5
+      },
+      "s003": {
+        "coin_id": "ethereum",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 3,
+        "wins": 2,
+        "losses": 1,
+        "win_rate": 0.6666666666666666,
+        "expectancy_pct": 1.847930623185694,
+        "avg_win_pct": 5.168113841915987,
+        "avg_loss_pct": -4.792435814274891,
+        "profit_factor": 2.156779576065303,
+        "total_return_pct": 0.3386335880332103,
+        "max_drawdown_pct": 0.7175516020393448,
+        "final_equity": 10033.86,
+        "gate_open_pct": 18.8,
+        "observation_pct": 0.0,
+        "n_candidates_fired": 16,
+        "n_rejected_after_trigger": 13
+      },
+      "buy_hold_pct": -21.64,
+      "trigger_diag": {
+        "fired": 16,
+        "fired_gate_open": 3,
+        "fired_gate_closed": 13,
+        "already_in": 1,
+        "standdown": 0,
+        "no_atr": 0
+      },
+      "s003_trades": [
+        {
+          "entry_i": 591,
+          "exit_i": 594,
+          "reason": "target",
+          "entry": 3720.99,
+          "exit": 3910.31,
+          "net_pct": 4.773101783125993
+        },
+        {
+          "entry_i": 621,
+          "exit_i": 630,
+          "reason": "target",
+          "entry": 4450.46,
+          "exit": 4712.16,
+          "net_pct": 5.56312590070598
+        },
+        {
+          "entry_i": 994,
+          "exit_i": 999,
+          "reason": "expired",
+          "entry": 2516.43,
+          "exit": 2403.03,
+          "net_pct": -4.792435814274891
+        }
+      ],
+      "s003_rejections": [
+        {
+          "i": 297,
+          "ts": 1728864000000,
+          "close": 2629.79,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 12.3
+            }
+          },
+          "fwd5": 0.7,
+          "fwd10": -3.57
+        },
+        {
+          "i": 311,
+          "ts": 1730073600000,
+          "close": 2567.48,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 13.0
+            }
+          },
+          "fwd5": -2.85,
+          "fwd10": 12.77
+        },
+        {
+          "i": 320,
+          "ts": 1730851200000,
+          "close": 2721.87,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 10.3
+            }
+          },
+          "fwd5": 23.87,
+          "fwd10": 15.1
+        },
+        {
+          "i": 355,
+          "ts": 1733875200000,
+          "close": 3831.81,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 35.3
+            }
+          },
+          "fwd5": 4.03,
+          "fwd10": -12.86
+        },
+        {
+          "i": 528,
+          "ts": 1748822400000,
+          "close": 2607.41,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 41.9
+            }
+          },
+          "fwd5": -3.17,
+          "fwd10": 1.35
+        },
+        {
+          "i": 535,
+          "ts": 1749427200000,
+          "close": 2680.13,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 9.0
+            }
+          },
+          "fwd5": -5.57,
+          "fwd10": -5.93
+        },
+        {
+          "i": 629,
+          "ts": 1757548800000,
+          "close": 4458.82,
+          "trigger_reason": "",
+          "veto": {
+            "already_in_position": true,
+            "gate": {
+              "above_sma200": true,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 15.2
+            }
+          },
+          "fwd5": 0.95,
+          "fwd10": -0.31
+        },
+        {
+          "i": 822,
+          "ts": 1774224000000,
+          "close": 2152.03,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 28.6
+            }
+          },
+          "fwd5": -7.31,
+          "fwd10": -4.41
+        },
+        {
+          "i": 831,
+          "ts": 1775001600000,
+          "close": 2140.35,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 16.8
+            }
+          },
+          "fwd5": -1.55,
+          "fwd10": 6.76
+        },
+        {
+          "i": 835,
+          "ts": 1775347200000,
+          "close": 2110.17,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 13.1
+            }
+          },
+          "fwd5": 6.39,
+          "fwd10": 11.84
+        },
+        {
+          "i": 869,
+          "ts": 1778284800000,
+          "close": 2326.44,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 29.1
+            }
+          },
+          "fwd5": -1.86,
+          "fwd10": -9.22
+        },
+        {
+          "i": 957,
+          "ts": 1785888000000,
+          "close": 1908.9,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 15.2
+            }
+          },
+          "fwd5": -1.87,
+          "fwd10": -1.38
+        },
+        {
+          "i": 969,
+          "ts": 1786924800000,
+          "close": 1913.6,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 15.8
+            }
+          },
+          "fwd5": 26.6,
+          "fwd10": 31.22
+        }
+      ]
+    },
+    "solana": {
+      "v1": {
+        "coin_id": "solana",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 10,
+        "wins": 4,
+        "losses": 6,
+        "win_rate": 0.4,
+        "expectancy_pct": -5.278357171636797,
+        "avg_win_pct": 4.452315449760807,
+        "avg_loss_pct": -11.765472252568534,
+        "profit_factor": 0.252281441502915,
+        "total_return_pct": -4.695660690917213,
+        "max_drawdown_pct": 5.568298309442408,
+        "final_equity": 9530.43,
+        "gate_open_pct": 25.0,
+        "observation_pct": 0.0,
+        "flat_pct": 87.6
+      },
+      "s003": {
+        "coin_id": "solana",
+        "source": "binance",
+        "bars": 1000,
+        "trade_days": 800,
+        "n_trades": 6,
+        "wins": 3,
+        "losses": 3,
+        "win_rate": 0.5,
+        "expectancy_pct": -1.6681598765372259,
+        "avg_win_pct": 5.878171030123537,
+        "avg_loss_pct": -9.21449078319799,
+        "profit_factor": 0.6379268446219504,
+        "total_return_pct": -1.1307537278708701,
+        "max_drawdown_pct": 2.713361495940138,
+        "final_equity": 9886.92,
+        "gate_open_pct": 25.0,
+        "observation_pct": 0.0,
+        "n_candidates_fired": 9,
+        "n_rejected_after_trigger": 3
+      },
+      "buy_hold_pct": -31.24,
+      "trigger_diag": {
+        "fired": 9,
+        "fired_gate_open": 6,
+        "fired_gate_closed": 3,
+        "already_in": 0,
+        "standdown": 0,
+        "no_atr": 0
+      },
+      "s003_trades": [
+        {
+          "entry_i": 320,
+          "exit_i": 321,
+          "reason": "target",
+          "entry": 186.59,
+          "exit": 196.35,
+          "net_pct": 4.915500429617109
+        },
+        {
+          "entry_i": 596,
+          "exit_i": 599,
+          "reason": "target",
+          "entry": 179.95,
+          "exit": 191.78,
+          "net_pct": 6.254805066642902
+        },
+        {
+          "entry_i": 599,
+          "exit_i": 607,
+          "reason": "target",
+          "entry": 191.78,
+          "exit": 187.94,
+          "net_pct": -2.295847083478439
+        },
+        {
+          "entry_i": 607,
+          "exit_i": 609,
+          "reason": "target",
+          "entry": 187.94,
+          "exit": 200.69,
+          "net_pct": 6.464207594110601
+        },
+        {
+          "entry_i": 650,
+          "exit_i": 658,
+          "reason": "stop",
+          "entry": 234.74,
+          "exit": 188.43,
+          "net_pct": -19.968664622560077
+        },
+        {
+          "entry_i": 994,
+          "exit_i": 999,
+          "reason": "expired",
+          "entry": 102.46,
+          "exit": 97.24,
+          "net_pct": -5.378960643555451
+        }
+      ],
+      "s003_rejections": [
+        {
+          "i": 296,
+          "ts": 1728777600000,
+          "close": 147.74,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 10.9
+            }
+          },
+          "fwd5": 4.87,
+          "fwd10": 15.64
+        },
+        {
+          "i": 536,
+          "ts": 1749513600000,
+          "close": 165.12,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": false,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 20.3
+            }
+          },
+          "fwd5": -7.36,
+          "fwd10": -15.15
+        },
+        {
+          "i": 822,
+          "ts": 1774224000000,
+          "close": 91.43,
+          "trigger_reason": "",
+          "veto": {
+            "gate": {
+              "above_sma200": false,
+              "plus_gt_minus": true,
+              "structure_down": false,
+              "strong_downtrend": false,
+              "adx": 21.0
+            }
+          },
+          "fwd5": -10.22,
+          "fwd10": -13.66
+        }
+      ]
+    }
+  },
+  "pooled_v1": {
+    "trades": 35,
+    "wins": 19,
+    "win_rate": 0.543,
+    "expectancy_pct": -1.096,
+    "profit_factor": 0.679,
+    "total_net_pct": -38.36
+  },
+  "pooled_s003": {
+    "trades": 13,
+    "wins": 8,
+    "win_rate": 0.615,
+    "expectancy_pct": -0.014,
+    "profit_factor": 0.995,
+    "total_net_pct": -0.18
+  },
+  "verdict": {
+    "status": "REJECTED",
+    "reason": "pooled expectancy not positive after costs"
+  }
+}

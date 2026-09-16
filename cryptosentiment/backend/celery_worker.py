@@ -20,6 +20,10 @@ celery_app.conf.beat_schedule = {
         'task': 'tasks.run_daily_predictions',
         'schedule': crontab(hour=0, minute=0),  # every day at midnight UTC
     },
+    'run-daily-journal': {
+        'task': 'tasks.run_daily_journal',
+        'schedule': crontab(hour=0, minute=5),  # 00:05 UTC: settle + log E006 arms
+    },
 }
 
 celery_app.conf.timezone = 'UTC'

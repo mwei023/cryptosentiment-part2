@@ -232,9 +232,14 @@ def daily_signal_dual(coin_id, capital=10000.0):
     closes = [float(p[1]) for p in data.get("prices", []) if p[1] and float(p[1]) > 0]
     if len(closes) < 10:
         return {"coin_id": coin_id, "error": "insufficient history"}
-    fc = naive_forecast(closes)
-    last = closes[-1]
-    band_pos = "below_lower" if last < fc["lower"] else ("above_upper" if last > fc["upper"] else "inside")
+
+    # Bands active for TODAY were projected from history up to yesterday:
+    fc_active = naive_forecast(closes[:-1])
+    # Bands active for TOMORROW projected from history up to today:
+    fc_tomorrow = naive_forecast(closes)
+
+    current_px = get_latest_price(coin_id) or closes[-1]
+    band_pos = "below_lower" if current_px < fc_active["lower"] else ("above_upper" if current_px > fc_active["upper"] else "inside")
     signal = "BUY" if band_pos == "below_lower" else ("SELL" if band_pos == "above_upper" else "HOLD")
 
     try:
@@ -256,8 +261,9 @@ def daily_signal_dual(coin_id, capital=10000.0):
         "signal": signal_info,  # legacy key = info arm (backward compat)
         "signal_price": signal_price,
         "signal_info": signal_info,
-        "price": get_latest_price(coin_id) or last,
-        "band": {"lower": round(fc["lower"], 2), "upper": round(fc["upper"], 2)},
+        "price": current_px,
+        "band": {"lower": round(fc_active["lower"], 2), "upper": round(fc_active["upper"], 2)},
+        "tomorrow_band": {"lower": round(fc_tomorrow["lower"], 2), "upper": round(fc_tomorrow["upper"], 2)},
         "band_position": band_pos,
         "sentiment": {"n": len(sentiments), "pos": pos, "neu": neu, "neg": neg},
         "confidence": conf_info,  # legacy key = info arm

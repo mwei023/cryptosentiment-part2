@@ -35,7 +35,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-COINS = ("bitcoin", "ethereum", "solana")
+CORE_COINS = ("bitcoin", "ethereum", "solana")
+EXPANDED_COINS = ("bitcoin", "ethereum", "solana", "binancecoin", "cardano", "ripple", "dogecoin")
+
+COINS = tuple(
+    c.strip() for c in os.getenv("JOURNAL_COINS", "").split(",") if c.strip()
+) or (EXPANDED_COINS if os.getenv("USE_EXPANDED_UNIVERSE", "0") == "1" else CORE_COINS)
+
 REPORTS_DIR = os.path.join(os.path.dirname(__file__), "results",
                            "E006", "daily_reports")
 MIN_SETTLED = 30
@@ -46,12 +52,17 @@ def _today():
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
-def run_daily():
+def run_daily(coins=None):
     """Settle + log every coin. Returns {coin: row}."""
+    import time
     from utils import journal
+    journal.settle_pending()
+    target_coins = coins or COINS
     out = {}
-    for coin in COINS:
+    for i, coin in enumerate(target_coins):
         try:
+            if i > 0:
+                time.sleep(1.5)  # rate-limit guard for CoinGecko free tier
             out[coin] = journal.log_today(coin)
         except Exception as e:  # one coin's failure never blocks the others
             out[coin] = {"coin_id": coin, "error": str(e)}
@@ -75,8 +86,9 @@ def _band_watch(row):
     """
     try:
         px = float(row["price"])
-        lo = float(row["band_lower"])
-        hi = float(row["band_upper"])
+        t_band = row.get("tomorrow_band") or {}
+        lo = float(t_band.get("lower", row.get("band_lower")))
+        hi = float(t_band.get("upper", row.get("band_upper")))
     except (KeyError, TypeError, ValueError):
         return "band data unavailable"
     pos = row.get("band_position", "?")
@@ -94,11 +106,12 @@ def _band_watch(row):
             f"({hi:,.2f}) [{pos}]")
 
 
-def build_report(logged):
+def build_report(logged, coins=None):
     """Combine today's rows + journal head-to-head + previous receipt."""
     from utils import journal
     summ = journal.summary()
     today = _today()
+    target_coins = coins or tuple(logged.keys()) or COINS
 
     prev, prev_data = None, {}
     files = [f for f in _load_reports() if not f.endswith(f"{today}.json")]
@@ -111,7 +124,7 @@ def build_report(logged):
             prev_data = {}
 
     per_coin = {}
-    for coin in COINS:
+    for coin in target_coins:
         r = logged.get(coin, {})
         if "error" in r and "price" not in r:
             per_coin[coin] = {"error": r.get("error", "unknown")}
@@ -155,7 +168,7 @@ def build_report(logged):
     # Settlement watch: today's non-HOLD arms settle on tomorrow's run.
     settling = {c: {a: per_coin[c].get(f"signal_{a}")
                     for a in ("price", "info")}
-                for c in COINS if "error" not in per_coin.get(c, {})}
+                for c in target_coins if "error" not in per_coin.get(c, {})}
 
     return {
         "date": today,
@@ -191,7 +204,8 @@ def format_report(rep):
         L.append(f"vetoes so far: {s.get('vetoes')} ({rep['deltas']['vetoes']})")
 
     L.append("--- NOW: price arm vs info arm ---")
-    for coin in COINS:
+    coins_in_rep = list(rep["per_coin"].keys())
+    for coin in coins_in_rep:
         c = rep["per_coin"].get(coin, {})
         if "error" in c:
             L.append(f"{coin}: ERROR {c['error']}")
@@ -205,7 +219,7 @@ def format_report(rep):
             f"news n={sn.get('n')} pos={sn.get('pos')} "
             f"neg={sn.get('neg')} {c.get('skipped', '')}".rstrip())
     L.append("--- NEXT ---")
-    for coin in COINS:
+    for coin in coins_in_rep:
         c = rep["per_coin"].get(coin, {})
         if "error" in c:
             continue
@@ -221,18 +235,21 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="E006 daily automation")
     ap.add_argument("--print-only", action="store_true",
                     help="settle + report without logging new rows")
+    ap.add_argument("--expanded", action="store_true",
+                    help="use expanded universe (7 liquid coins)")
     args = ap.parse_args(argv)
 
+    active_coins = EXPANDED_COINS if args.expanded else COINS
     logged = {}
     if args.print_only:
         from utils import journal
         journal.settle_pending()
-        for coin in COINS:  # show current state; nothing appended
+        for coin in active_coins:  # show current state; nothing appended
             logged[coin] = {"coin_id": coin, "skipped": "(print-only)"}
         # refresh with real latest rows for the watch section
         with open(journal.JOURNAL, newline="") as f:
             rows = list(csv.DictReader(f))
-        for coin in COINS:
+        for coin in active_coins:
             coin_rows = [r for r in rows if r["coin_id"] == coin]
             if coin_rows:
                 r = coin_rows[-1]
@@ -249,9 +266,9 @@ def main(argv=None):
                     "skipped": "(print-only, latest logged row)",
                 }
     else:
-        logged = run_daily()
+        logged = run_daily(coins=active_coins)
 
-    rep = build_report(logged)
+    rep = build_report(logged, coins=active_coins)
     if not args.print_only:
         os.makedirs(REPORTS_DIR, exist_ok=True)
         with open(os.path.join(REPORTS_DIR, f"{rep['date']}.json"), "w") as f:

@@ -71,7 +71,16 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 def read_root():
     return {
         "message": "Welcome to CryptoSentiment AI API",
-        "available_routes": ["/", "/cryptos", "/analyze-news", "/predict/{coin_id}", "/confidence/{coin_id}", "/history/{coin_id}"]
+        "available_routes": [
+            "/",
+            "/cryptos",
+            "/analyze-news",
+            "/predict/{coin_id}",
+            "/confidence/{coin_id}",
+            "/history/{coin_id}",
+            "/research/daily-report",
+            "/research/scoreboard"
+        ]
     }
 
 
@@ -208,3 +217,26 @@ def get_history(coin_id: str, db: Session = Depends(get_db)):
             for p in historical_predictions
         ]
     }
+
+
+@app.get("/research/daily-report")
+def get_daily_report():
+    """Return the latest E006 dual-arm daily report JSON."""
+    import json
+    from research.daily_report import _load_reports, main as generate_report
+    reports = _load_reports()
+    if reports:
+        try:
+            with open(reports[-1]) as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Failed to read latest report file: {e}")
+    # Fallback to generating in print-only mode
+    return generate_report(["--print-only"])
+
+
+@app.get("/research/scoreboard")
+def get_research_scoreboard():
+    """Return the live E006 head-to-head scoreboard between price and info arms."""
+    from utils import journal
+    return journal.summary()

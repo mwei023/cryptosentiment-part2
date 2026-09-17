@@ -1,6 +1,7 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor
 
+import requests
 from fastapi import FastAPI, Depends, APIRouter, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -22,6 +23,22 @@ from utils.prediction_utils import run_prediction_pipeline
 
 app = FastAPI()
 router = APIRouter()
+
+
+def _opt_float(raw):
+    """CSV string -> float | None (journal cells are often empty)."""
+    if raw is None or str(raw).strip() == "":
+        return None
+    try:
+        return float(raw)
+    except (TypeError, ValueError):
+        return None
+
+
+def _opt_bool(raw):
+    """CSV '1'/'0'/'' -> True/False/None."""
+    s = str(raw).strip()
+    return True if s == "1" else (False if s == "0" else None)
 
 origins = [
     "http://localhost",
@@ -78,8 +95,10 @@ def read_root():
             "/predict/{coin_id}",
             "/confidence/{coin_id}",
             "/history/{coin_id}",
+            "/prices/{coin_id}",
             "/research/daily-report",
-            "/research/scoreboard"
+            "/research/scoreboard",
+            "/research/journal",
         ]
     }
 
@@ -240,3 +259,62 @@ def get_research_scoreboard():
     """Return the live E006 head-to-head scoreboard between price and info arms."""
     from utils import journal
     return journal.summary()
+
+
+@app.get("/research/journal")
+def get_research_journal():
+    """E006 journal ledger: per-row dual-arm signals, settlements and P&L.
+
+    Powers the frontend's cumulative P&L chart and trade log. Returns the
+    raw CSV rows (typed/ordered for the chart) plus the summary() stats.
+    Unsettled rows are included with null net/win so the frontend can
+    show pending trades honestly instead of inventing fills.
+    """
+    from utils import journal
+    rows = journal.read_rows()
+    ledger = [
+        {
+            "date": r["date"],
+            "coin_id": r["coin_id"],
+            "price": _opt_float(r["price"]),
+            "band_position": r["band_position"],
+            "signal_price": r["signal_price"],
+            "signal_info": r["signal_info"],
+            "conf_price": _opt_float(r["conf_price"]),
+            "conf_info": _opt_float(r["conf_info"]),
+            "net_price": _opt_float(r["net_price"]),
+            "net_info": _opt_float(r["net_info"]),
+            "win_price": _opt_bool(r["win_price"]),
+            "win_info": _opt_bool(r["win_info"]),
+        }
+        for r in rows
+    ]
+    return {
+        "rows": ledger,
+        "summary": journal.summary(),
+    }
+
+
+@app.get("/prices/{coin_id}")
+def get_price_history(
+    coin_id: str,
+    days: int = Query(default=90, ge=2, le=365),
+):
+    """Daily close history for charts (CoinGecko market_chart passthrough).
+
+    Returns {prices: [[timestamp_ms, close], ...]} oldest-first. Errors
+    surface as HTTP codes — 502 when the upstream provider fails, 422
+    for invalid ranges — instead of silent empty lists.
+    """
+    if days < 2:
+        raise HTTPException(status_code=422, detail="days must be >= 2")
+    try:
+        data = get_historical_prices(coin_id, days=days)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except requests.RequestException as e:
+        raise HTTPException(status_code=502, detail=f"Upstream market data unavailable: {e}")
+    prices = data.get("prices", [])
+    if not prices:
+        raise HTTPException(status_code=502, detail="Upstream market data provider returned no data")
+    return {"coin_id": coin_id, "days": days, "prices": prices}

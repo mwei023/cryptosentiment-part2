@@ -173,6 +173,18 @@ def log_today(coin_id):
     return row
 
 
+def read_rows():
+    """Return all journal rows as dicts (typed by _ensure / migration).
+
+    Read-only view for the API layer: /research/journal serializes this
+    for the frontend P&L chart. No settling happens here — settlement
+    is a write-path concern (settle_pending / log_today).
+    """
+    _ensure()
+    with open(JOURNAL, newline="") as f:
+        return list(csv.DictReader(f))
+
+
 def _arm_stats(rows, net_key, win_key):
     nets = [float(r[net_key]) for r in rows if r[net_key]]
     if not nets:

@@ -52,6 +52,37 @@ def _today():
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
+def _hydrate_from_journal(row, coin):
+    """Fill a failed row from the journal's latest entry for that coin.
+
+    A CoinGecko 429 during log_today() used to blank the saved receipt
+    with nulls (build_report emits per_coin entries without signal
+    fields) even though the coin's row had been logged by an earlier
+    attempt. Reading back what actually got journaled keeps the
+    receipt a faithful record of the day.
+    """
+    from utils import journal
+    rows = [r for r in journal.read_rows() if r["coin_id"] == coin]
+    if not rows:
+        return row
+    r = rows[-1]
+    hydrated = {
+        "coin_id": coin,
+        "signal_price": r.get("signal_price"),
+        "signal_info": r.get("signal_info"),
+        "conf_price": r.get("conf_price"),
+        "conf_info": r.get("conf_info"),
+        "band_position": r.get("band_position"),
+        "price": r.get("price"), "band_lower": r.get("band_lower"),
+        "band_upper": r.get("band_upper"),
+        "n_news": r.get("n_news"), "n_pos": r.get("n_pos"),
+        "n_neg": r.get("n_neg"), "n_neu": r.get("n_neu"),
+    }
+    hydrated.update({k: v for k, v in row.items() if v is not None})
+    hydrated.setdefault("skipped", "hydrated from journal (log attempt failed)")
+    return hydrated
+
+
 def run_daily(coins=None):
     """Settle + log every coin. Returns {coin: row}."""
     import time
@@ -66,6 +97,14 @@ def run_daily(coins=None):
             out[coin] = journal.log_today(coin)
         except Exception as e:  # one coin's failure never blocks the others
             out[coin] = {"coin_id": coin, "error": str(e)}
+    # A failed/fetch-limited row must not null out an actually-logged
+    # day in the receipt — hydrate it from what the journal really has.
+    for coin, row in out.items():
+        if "signal_price" not in row and "error" in row:
+            try:
+                out[coin] = _hydrate_from_journal(row, coin)
+            except Exception:
+                pass
     return out
 
 

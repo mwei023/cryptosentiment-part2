@@ -63,9 +63,17 @@ frontend/node_modules/
 dist/
 build/
 
-# Paper-trade journal (runtime forward-test data, not source)
-paper_journal.csv
-backend/paper_journal.csv
+# Paper-trade journal (E006 forward-test data).
+# COMMITTED: the deployment topology serves /research/* from the repo
+# (journal runs on GitHub Actions, which commits results; Render's disk
+# is ephemeral and the free web tier cannot mount persistent disks).
+# paper_journal.csv
+# backend/paper_journal.csv
+# COMMITTED: the deployment topology serves /research/* from the repo
+# (journal runs on GitHub Actions, which commits results; Render's disk
+# is ephemeral and the free web tier cannot mount persistent disks).
+# paper_journal.csv
+# backend/paper_journal.csv
 
 # HuggingFace model weight caches — large binaries, never commit.
 # NOTE: models/ is ALSO the Python ORM package (base.py etc.), so ignore

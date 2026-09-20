@@ -1,4 +1,5 @@
 import logging
+import os
 from concurrent.futures import ThreadPoolExecutor
 
 import requests
@@ -45,13 +46,44 @@ origins = [
     "http://localhost:3000",
 ]
 
+# Deployed frontends are unknown at code time (onrender.com subdomain,
+# custom domains, previews). Allow-list comes from the env; "*" keeps
+# localhost behavior for development. Sentiment endpoints never accept
+# credentials-bearing requests, so a broad list is low risk here.
+_extra_origins = [
+    o.strip() for o in os.getenv("CORS_EXTRA_ORIGINS", "").split(",")
+    if o.strip()
+]
+if "*" in _extra_origins:
+    origins = "*"
+else:
+    origins = origins + _extra_origins
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
+    allow_credentials=origins != "*",
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Free Render tier: 512 MB RAM cannot hold FinBERT (torch + BERT-base,
+# ~1 GB resident). When DISABLE_HEAVY_MODELS=1 (set in render.yaml),
+# sentiment endpoints return 503 with an explanation instead of being
+# killed by the OOM reaper mid-request. Unset/"0" = attempt to load.
+HEAVY_MODELS_DISABLED = os.getenv("DISABLE_HEAVY_MODELS", "0") == "1"
+
+
+def _require_heavy_models():
+    if HEAVY_MODELS_DISABLED:
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "Sentiment endpoints are disabled on this compute tier: "
+                "FinBERT needs >512MB RAM. Upgrade the plan and set "
+                "DISABLE_HEAVY_MODELS=0 to enable."
+            ),
+        )
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -90,6 +122,7 @@ def read_root():
         "message": "Welcome to CryptoSentiment AI API",
         "available_routes": [
             "/",
+            "/health",
             "/cryptos",
             "/analyze-news",
             "/predict/{coin_id}",
@@ -101,6 +134,12 @@ def read_root():
             "/research/journal",
         ]
     }
+
+
+@app.get("/health")
+def health():
+    """Render health check — must be cheap and never touch upstream APIs."""
+    return {"status": "ok"}
 
 
 @app.get("/trigger-daily-predictions")
@@ -120,6 +159,7 @@ def trigger_predictions():
 
 @app.get("/analyze-news")
 async def analyze():
+    _require_heavy_models()
     logger.info("🔍 Fetching news for analysis")
     titles = await fetch_news("Bitcoin")
 
@@ -149,6 +189,7 @@ def list_cryptos():
 
 @app.get("/news/{coin_id}")
 async def get_news(coin_id: str):
+    _require_heavy_models()
     logger.info(f"🔍 fetching news for {coin_id}")
 
     titles = await fetch_news(coin_id)
@@ -187,6 +228,7 @@ def predict(
 
 @app.get("/confidence/{coin_id}")
 async def get_confidence(coin_id: str):
+    _require_heavy_models()
     logger.info(f"🔍 Calculating confidence for {coin_id}")
 
     titles = await fetch_news(coin_id)

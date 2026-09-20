@@ -1,0 +1,69 @@
+# Render blueprint — $0 topology.
+#
+# Architecture (why it looks like this):
+#   - Celery workers have NO free tier on Render, so the E006 daily journal
+#     does NOT run here. It runs as a scheduled GitHub Actions job
+#     (.github/workflows/daily-journal.yml), which commits results to the
+#     repo; the API below serves them read-only from disk. Render's free
+#     filesystem is ephemeral — journal state must live in git, not on disk.
+#   - Free web services have 512 MB RAM. FinBERT/torch (~1–2 GB) cannot load
+#     there, so the API starts with DISABLE_HEAVY_MODELS=1 and the
+#     sentiment-bearing endpoints (/analyze-news, /news, /confidence) return
+#     503, and /predict computes confidence from price data only. Price
+#     endpoints, paper trading and /research/* journal reads all work.
+#   - On a paid instance size, unset DISABLE_HEAVY_MODELS to load FinBERT.
+
+services:
+  - type: web
+    name: cryptosentiment-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements-free.txt
+    # requirements-free.txt = full requirements minus torch/transformers/prophet.
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: DISABLE_HEAVY_MODELS
+        value: "1"
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cryptosentiment-db
+          property: connectionString
+      # main.py always allows localhost:*; add the deployed frontend origin.
+      # Update if the Render service name changes (URL is derived from it).
+      - key: CORS_EXTRA_ORIGINS
+        value: https://cryptosentiment-frontend.onrender.com
+      - key: COINGECKO_API_URL
+        value: https://api.coingecko.com/api/v3
+      - key: NEWS_API_KEY
+        sync: false
+
+  - type: web
+    name: cryptosentiment-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: build
+    pullRequestPreviewsEnabled: false
+    envVars:
+      # Build-time env var consumed by CRA/Vite (see frontend .env handling).
+      - key: REACT_APP_API_URL
+        value: https://cryptosentiment-api.onrender.com
+    routes:
+      # React SPA: serve index.html for all non-file paths.
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  - name: cryptosentiment-db
+    databaseName: cryptosentiment
+    user: cryptosentiment
+    plan: free
+    postgresMajorVersion: "16"

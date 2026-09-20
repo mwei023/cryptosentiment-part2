@@ -1,0 +1,88 @@
+{
+  "date": "2026-09-17",
+  "summary": {
+    "settled": 0,
+    "note": "no settled signals yet \u2014 journal just started"
+  },
+  "deltas_vs": null,
+  "deltas": {
+    "price": {
+      "settled": "--",
+      "expectancy": "--"
+    },
+    "info": {
+      "settled": "--",
+      "expectancy": "--"
+    },
+    "vetoes": "--"
+  },
+  "per_coin": {
+    "bitcoin": {
+      "signal_price": "HOLD",
+      "signal_info": "HOLD",
+      "vetoed": false,
+      "conf_price": 22.85,
+      "conf_info": 65.97,
+      "band_position": "inside",
+      "sentiment": {
+        "n": 100,
+        "pos": 16,
+        "neg": 13,
+        "neu": 71
+      },
+      "watch": "inside: -3.8% day reaches BUY zone (73,682.96), +2.8% day reaches SELL zone (78,693.06) [inside]",
+      "skipped": ""
+    },
+    "ethereum": {
+      "signal_price": "HOLD",
+      "signal_info": "HOLD",
+      "vetoed": false,
+      "conf_price": 19.58,
+      "conf_info": 57.19,
+      "band_position": "inside",
+      "sentiment": {
+        "n": 100,
+        "pos": 22,
+        "neg": 20,
+        "neu": 58
+      },
+      "watch": "inside: -6.6% day reaches BUY zone (2,299.33), +3.1% day reaches SELL zone (2,538.51) [inside]",
+      "skipped": ""
+    },
+    "solana": {
+      "signal_price": "HOLD",
+      "signal_info": "HOLD",
+      "vetoed": false,
+      "conf_price": 19.55,
+      "conf_info": 59.24,
+      "band_position": "inside",
+      "sentiment": {
+        "n": 100,
+        "pos": 27,
+        "neg": 12,
+        "neu": 61
+      },
+      "watch": "inside: -6.9% day reaches BUY zone (93.99), +2.4% day reaches SELL zone (103.31) [inside]",
+      "skipped": ""
+    }
+  },
+  "settling_tomorrow": {
+    "bitcoin": {
+      "price": "HOLD",
+      "info": "HOLD"
+    },
+    "ethereum": {
+      "price": "HOLD",
+      "info": "HOLD"
+    },
+    "solana": {
+      "price": "HOLD",
+      "info": "HOLD"
+    }
+  },
+  "maturity": {
+    "settled_slowest_arm": 0,
+    "required_per_arm": 30,
+    "to_go": 30
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "date": "2026-09-18",
+  "summary": {
+    "settled_rows": 2,
+    "vetoes": 1,
+    "price": {
+      "settled": 2,
+      "wins": 0,
+      "losses": 2,
+      "win_rate_pct": 0.0,
+      "expectancy_pct": -0.278,
+      "total_net_pct": -0.56,
+      "profit_factor": 0.0
+    },
+    "info": {
+      "settled": 1,
+      "wins": 0,
+      "losses": 1,
+      "win_rate_pct": 0.0,
+      "expectancy_pct": -0.3,
+      "total_net_pct": -0.3,
+      "profit_factor": 0.0
+    },
+    "settled": 1,
+    "wins": 0,
+    "losses": 1,
+    "win_rate_pct": 0.0,
+    "expectancy_pct": -0.3,
+    "total_net_pct": -0.3
+  },
+  "deltas_vs": "2026-09-17.json",
+  "deltas": {
+    "price": {
+      "settled": "--",
+      "expectancy": "--"
+    },
+    "info": {
+      "settled": "--",
+      "expectancy": "--"
+    },
+    "vetoes": "--"
+  },
+  "per_coin": {
+    "bitcoin": {
+      "signal_price": null,
+      "signal_info": null,
+      "vetoed": false,
+      "conf_price": null,
+      "conf_info": null,
+      "band_position": null,
+      "sentiment": {
+        "n": null,
+        "pos": null,
+        "neg": null,
+        "neu": null
+      },
+      "watch": "already logged today",
+      "skipped": "already logged today"
+    },
+    "ethereum": {
+      "signal_price": null,
+      "signal_info": null,
+      "vetoed": false,
+      "conf_price": null,
+      "conf_info": null,
+      "band_position": null,
+      "sentiment": {
+        "n": null,
+        "pos": null,
+        "neg": null,
+        "neu": null
+      },
+      "watch": "already logged today",
+      "skipped": "already logged today"
+    },
+    "solana": {
+      "signal_price": "SELL",
+      "signal_info": "HOLD",
+      "vetoed": true,
+      "conf_price": 18.83,
+      "conf_info": 57.48,
+      "band_position": "above_upper",
+      "sentiment": {
+        "n": 100,
+        "pos": 27,
+        "neg": 14,
+        "neu": 59
+      },
+      "watch": "price-SELL open: a hold below 106.51 keeps it; info arm: HOLD",
+      "skipped": ""
+    }
+  },
+  "settling_tomorrow": {
+    "bitcoin": {
+      "price": null,
+      "info": null
+    },
+    "ethereum": {
+      "price": null,
+      "info": null
+    },
+    "solana": {
+      "price": "SELL",
+      "info": "HOLD"
+    }
+  },
+  "maturity": {
+    "settled_slowest_arm": 1,
+    "required_per_arm": 30,
+    "to_go": 29
+  }
+}

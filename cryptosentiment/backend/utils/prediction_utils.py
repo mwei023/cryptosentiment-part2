@@ -16,9 +16,15 @@ Brutal-truth notes (why this looks the way it does):
 
 from sqlalchemy.orm import Session
 import logging
-from prophet import Prophet
-import pandas as pd
+import os
 from datetime import datetime
+
+# NOTE: Prophet and pandas are imported lazily inside the prophet code
+# path (train/prepare), NOT at module top level. prophet pulls in
+# torch-sized dependencies (~300+ MB RAM) and the free-tier web
+# service has 512 MB — importing it at boot would OOM every deploy for
+# a forecaster that is explicitly the non-default research path. The
+# default "naive" forecaster needs only stdlib math.
 
 from models.prediction import Prediction
 
@@ -35,6 +41,8 @@ def prepare_data(prices, min_history: int = MIN_HISTORY_DAYS):
     Raises:
         ValueError: if fewer than ``min_history`` usable rows remain.
     """
+    import pandas as pd  # lazy: see module NOTE
+
     if not prices or len(prices) < min_history:
         raise ValueError(
             f"Not enough price data: got {len(prices) if prices else 0} rows, "
@@ -56,6 +64,8 @@ def prepare_data(prices, min_history: int = MIN_HISTORY_DAYS):
 
 def train_prophet_model(df):
     """Fit Prophet with crypto-honest settings. No holidays, no yearly cycle."""
+    from prophet import Prophet  # lazy: see module NOTE
+
     if len(df) < MIN_HISTORY_DAYS:
         raise ValueError(
             f"Refusing to train on {len(df)} rows (< {MIN_HISTORY_DAYS} minimum)."
@@ -201,29 +211,40 @@ def run_prediction_pipeline(coin_id: str, days: int = 1, db: Session = None,
         history_rows = len(df)
 
     # Real fusion point: FinBERT sentiment on headlines + REAL price volatility.
+    # SKIP when heavy models are disabled (512MB tiers): loading torch here
+    # would OOM-kill the whole service mid-request. Confidence falls back
+    # to price-only, same as the no-news path.
     confidence = 0.0
     n_news = 0
-    try:
-        import asyncio
+    if os.getenv("DISABLE_HEAVY_MODELS", "0") == "1":
+        logger.warning("DISABLE_HEAVY_MODELS=1 — confidence computed from price data only")
         try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = None
-        if loop is not None:
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-                titles = pool.submit(asyncio.run, fetch_news(coin_id)).result()
-        else:
-            titles = asyncio.run(fetch_news(coin_id))
-        if titles:
-            sentiments = analyze_sentiment(titles)
-            n_news = len(sentiments)
-            confidence = calculate_confidence(sentiments, price_volatility=vol)
-        else:
-            logger.warning("No news found — confidence from price data only")
+            from utils.confidence_calculator import calculate_confidence
             confidence = calculate_confidence([], price_volatility=vol)
-    except Exception as e:
-        logger.warning(f"Failed to compute confidence: {e}")
+        except Exception as e:
+            logger.warning(f"Failed to compute price-only confidence: {e}")
+    else:
+        try:
+            import asyncio
+            try:
+                loop = asyncio.get_running_loop()
+            except RuntimeError:
+                loop = None
+            if loop is not None:
+                import concurrent.futures
+                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                    titles = pool.submit(asyncio.run, fetch_news(coin_id)).result()
+            else:
+                titles = asyncio.run(fetch_news(coin_id))
+            if titles:
+                sentiments = analyze_sentiment(titles)
+                n_news = len(sentiments)
+                confidence = calculate_confidence(sentiments, price_volatility=vol)
+            else:
+                logger.warning("No news found — confidence from price data only")
+                confidence = calculate_confidence([], price_volatility=vol)
+        except Exception as e:
+            logger.warning(f"Failed to compute confidence: {e}")
 
     saved_id = None
     if db is not None:

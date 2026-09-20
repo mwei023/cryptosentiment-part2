@@ -49,20 +49,36 @@ Everything else works on free: `/cryptos`, `/prices/{coin}`, `/history/{coin}`,
 
 4. **Verify env wiring after first deploy:**
    - API → Environment: `DATABASE_URL` should be auto-linked from the
-     database; `CORS_EXTRA_ORIGINS` must match the actual frontend URL
-     (Render names the URL after the service — if your services aren't
-     named `cryptosentiment-api`/`cryptosentiment-frontend`, update the
-     values in render.yaml and in the frontend's `REACT_APP_API_URL`).
+     database; `CORS_EXTRA_ORIGINS` is already set to the custom domain.
+     If your services aren't named `cryptosentiment-api`/`cryptosentiment-frontend`,
+     update `CORS_EXTRA_ORIGINS`, the `domains:` entries in render.yaml, and
+     the frontend's `REACT_APP_API_URL` so all three stay in sync.
    - Frontend → Environment: `REACT_APP_API_URL` = the API's URL
      (build-time variable — redeploy the frontend after changing it).
 
-5. **Smoke test:**
-   ```bash
-   curl https://<api-url>/health || curl https://<api-url>/
-   curl https://<api-url>/research/scoreboard
-   curl "https://<api-url>/prices/bitcoin?days=7"
-   curl -I https://<api-url>/analyze-news        # expect 503 on free tier
-   ```
+5. **Connect the custom domains (mwei.co.ke).** The blueprint already
+   declares `cryptosentiment.mwei.co.ke` (frontend) and
+   `cryptosentiment-api.mwei.co.ke` (API); after the first sync Render
+   shows the exact DNS records to create. At your registrar (or Cloudflare
+   etc.), add these records for the `mwei.co.ke` zone:
+
+   | Type | Name | Value |
+   |------|------|-------|
+   | CNAME | `cryptosentiment` | `cryptosentiment-frontend.onrender.com` |
+   | CNAME | `cryptosentiment-api` | `cryptosentiment-api.onrender.com` |
+
+   (Render may instead issue a verified `your-site.onrender.com` CNAME
+   target — use whatever the dashboard shows for each service.) TLS certs
+   are issued automatically once DNS propagates. Both services keep their
+   onrender.com URLs as well, so nothing breaks while DNS propagates.
+
+6. **Smoke test:**
+   curl https://cryptosentiment-api.mwei.co.ke/health || curl https://<api-url>/
+   curl https://cryptosentiment-api.mwei.co.ke/research/scoreboard
+   curl "https://cryptosentiment-api.mwei.co.ke/prices/bitcoin?days=7"
+   curl -I https://cryptosentiment-api.mwei.co.ke/analyze-news   # expect 503 on free tier
+   # After DNS propagates, check the frontend too:
+   curl -I https://cryptosentiment.mwei.co.ke
 
 ## The daily loop (what "running the experiment" means now)
 

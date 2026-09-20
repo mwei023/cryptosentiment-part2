@@ -19,6 +19,8 @@ services:
     runtime: python
     plan: free
     rootDir: backend
+    domains:
+      - cryptosentiment-api.mwei.co.ke
     buildCommand: pip install -r requirements-free.txt
     # requirements-free.txt = full requirements minus torch/transformers/prophet.
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -36,9 +38,9 @@ services:
           name: cryptosentiment-db
           property: connectionString
       # main.py always allows localhost:*; add the deployed frontend origin.
-      # Update if the Render service name changes (URL is derived from it).
+      # Custom domains are declared on each service (see `domains:` below each).
       - key: CORS_EXTRA_ORIGINS
-        value: https://cryptosentiment-frontend.onrender.com
+        value: https://cryptosentiment.mwei.co.ke
       - key: COINGECKO_API_URL
         value: https://api.coingecko.com/api/v3
       - key: NEWS_API_KEY
@@ -48,13 +50,15 @@ services:
     name: cryptosentiment-frontend
     runtime: static
     rootDir: frontend
+    domains:
+      - cryptosentiment.mwei.co.ke
     buildCommand: npm ci && npm run build
     staticPublishPath: build
     pullRequestPreviewsEnabled: false
     envVars:
       # Build-time env var consumed by CRA/Vite (see frontend .env handling).
       - key: REACT_APP_API_URL
-        value: https://cryptosentiment-api.onrender.com
+        value: https://cryptosentiment-api.mwei.co.ke
     routes:
       # React SPA: serve index.html for all non-file paths.
       - type: rewrite

@@ -18,7 +18,8 @@ services:
     name: cryptosentiment-api
     runtime: python
     plan: free
-    rootDir: backend
+    # rootDir is relative to the REPO ROOT (not to this file's location).
+    rootDir: cryptosentiment/backend
     domains:
       - cryptosentiment-api.mwei.co.ke
     buildCommand: pip install -r requirements-free.txt
@@ -49,7 +50,7 @@ services:
   - type: web
     name: cryptosentiment-frontend
     runtime: static
-    rootDir: frontend
+    rootDir: cryptosentiment/frontend
     domains:
       - cryptosentiment.mwei.co.ke
     buildCommand: npm ci && npm run build

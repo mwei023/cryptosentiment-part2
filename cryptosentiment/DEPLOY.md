@@ -40,12 +40,12 @@ Everything else works on free: `/cryptos`, `/prices/{coin}`, `/history/{coin}`,
 
 3. **Create the Render resources.** Either:
    - **Blueprint** (recommended): Render dashboard → New → Blueprint,
-     point it at the repo. It reads `cryptosentiment/render.yaml`… note the
-     blueprint lives in a subdirectory, so set the **Root Directory** to
-     `cryptosentiment` when creating the blueprint, or
+     point it at the repo — `render.yaml` sits at the **repo root**, so
+     leave the Blueprint Path field empty, or
    - **Manual**: create the three services with the settings from
-     `cryptosentiment/render.yaml` (rootDir `backend` for the API,
-     `frontend` for the static site; sync `NEWS_API_KEY` in the dashboard).
+     `render.yaml` (rootDir `cryptosentiment/backend` for the API,
+     `cryptosentiment/frontend` for the static site; sync `NEWS_API_KEY`
+     in the dashboard).
 
 4. **Verify env wiring after first deploy:**
    - API → Environment: `DATABASE_URL` should be auto-linked from the

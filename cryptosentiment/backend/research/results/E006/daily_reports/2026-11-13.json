@@ -1,0 +1,112 @@
+{
+  "date": "2026-11-13",
+  "summary": {
+    "settled_rows": 9,
+    "vetoes": 2,
+    "price": {
+      "settled": 9,
+      "wins": 0,
+      "losses": 9,
+      "win_rate_pct": 0.0,
+      "expectancy_pct": -0.748,
+      "total_net_pct": -6.73,
+      "profit_factor": 0.0
+    },
+    "info": {
+      "settled": 7,
+      "wins": 0,
+      "losses": 7,
+      "win_rate_pct": 0.0,
+      "expectancy_pct": -0.887,
+      "total_net_pct": -6.21,
+      "profit_factor": 0.0
+    },
+    "settled": 7,
+    "wins": 0,
+    "losses": 7,
+    "win_rate_pct": 0.0,
+    "expectancy_pct": -0.887,
+    "total_net_pct": -6.21
+  },
+  "deltas_vs": "2026-11-12.json",
+  "deltas": {
+    "price": {
+      "settled": "+1",
+      "expectancy": "+0.06"
+    },
+    "info": {
+      "settled": "+1",
+      "expectancy": "+0.10"
+    },
+    "vetoes": "+0"
+  },
+  "per_coin": {
+    "bitcoin": {
+      "signal_price": "BUY",
+      "signal_info": "BUY",
+      "vetoed": false,
+      "conf_price": 21.62,
+      "conf_info": 21.62,
+      "band_position": "below_lower",
+      "sentiment": {
+        "n": 0,
+        "pos": 0,
+        "neg": 0,
+        "neu": 0
+      },
+      "watch": "price-BUY open: a hold above 69,640.83 (+1.3% cushion) keeps it; info arm: BUY",
+      "skipped": ""
+    },
+    "ethereum": {
+      "signal_price": "BUY",
+      "signal_info": "BUY",
+      "vetoed": false,
+      "conf_price": 18.62,
+      "conf_info": 18.62,
+      "band_position": "below_lower",
+      "sentiment": {
+        "n": 0,
+        "pos": 0,
+        "neg": 0,
+        "neu": 0
+      },
+      "watch": "price-BUY open: a hold above 1,951.55 (+1.0% cushion) keeps it; info arm: BUY",
+      "skipped": ""
+    },
+    "solana": {
+      "signal_price": "HOLD",
+      "signal_info": "HOLD",
+      "vetoed": false,
+      "conf_price": "18.22",
+      "conf_info": "18.22",
+      "band_position": "inside",
+      "sentiment": {
+        "n": "0",
+        "pos": "0",
+        "neg": "0",
+        "neu": "0"
+      },
+      "watch": "inside: -2.2% day reaches BUY zone (80.83), +3.8% day reaches SELL zone (85.73) [inside]",
+      "skipped": "hydrated from journal (log attempt failed)"
+    }
+  },
+  "settling_tomorrow": {
+    "bitcoin": {
+      "price": "BUY",
+      "info": "BUY"
+    },
+    "ethereum": {
+      "price": "BUY",
+      "info": "BUY"
+    },
+    "solana": {
+      "price": "HOLD",
+      "info": "HOLD"
+    }
+  },
+  "maturity": {
+    "settled_slowest_arm": 7,
+    "required_per_arm": 30,
+    "to_go": 23
+  }
+}
